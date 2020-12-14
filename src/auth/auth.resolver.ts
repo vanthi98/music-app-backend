@@ -11,7 +11,7 @@ export class AuthResolver {
   constructor(private authService: AuthService) {}
 
   //@UseGuards(GqlAuthGuard)
-  @Mutation(() => AccountType)
+  @Mutation(() => AccountToken)
   async login(
     @Args({ name: "input", type: () => AccountInput }) input: AccountInput
   ): Promise<AccountToken> {

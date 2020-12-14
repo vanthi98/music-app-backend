@@ -15,6 +15,17 @@ type AccountType {
   password: String!
 }
 
+type Account {
+  id: String
+  account_name: String
+  password: String
+}
+
+type AccountToken {
+  access_token: String!
+  account: Account!
+}
+
 type Query {
   hello: String!
   user: [UserType!]!
@@ -25,7 +36,7 @@ type Mutation {
   updateUser(input: UserInput!, id: String!): UserType!
   deleteUser(id: String!): UserType!
   createAccount(input: AccountInput!): AccountType!
-  login(input: AccountInput!): AccountType!
+  login(input: AccountInput!): AccountToken!
 }
 
 input UserInput {
