@@ -23,4 +23,9 @@ export class AccountService {
     console.log(result);
     return result;
   }
+
+  async getAll(): Promise<AccountType[]> {
+    const result = await this.accountModel.find({});
+    return result;
+  }
 }
