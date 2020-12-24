@@ -5,6 +5,7 @@ import { AccountInput } from "./inputs/input-account.input";
 import { Account } from "./interfaces/account.interface";
 import { UseGuards } from "@nestjs/common";
 import { GqlAuthGuard } from "../auth/graphqlAuth";
+import { CtxUser } from "../auth/decorators/ctx-account.decorator";
 
 @Resolver()
 export class AccountResolver {
@@ -17,9 +18,10 @@ export class AccountResolver {
     return this.accountService.create(input);
   }
 
-  @UseGuards(GqlAuthGuard)
   @Query(() => [AccountType])
-  async getAllAccount(): Promise<AccountType[]> {
+  @UseGuards(GqlAuthGuard)
+  async getAllAccount(@CtxUser() user): Promise<AccountType[]> {
+    console.log("[user]", user);
     return this.accountService.getAll();
   }
 }

@@ -7,6 +7,7 @@ import { AuthHelper } from "./helpers/auth.helpers";
 import { JwtDto } from "./dto/jwt.dto";
 import { AccountToken } from "./models/account-token";
 import { Account } from "./models/account";
+import { jwtConstants } from "./constants/jwtKey";
 
 @Injectable()
 export class AuthService {
@@ -51,8 +52,14 @@ export class AuthService {
   private signToken(id: string) {
     const payload: JwtDto = { accountId: id };
 
-    return this.jwtService.sign(payload);
+    return this.jwtService.sign(payload, {
+      secret: jwtConstants.secret
+    });
   }
+
+  // private validateUserJwt(token: string) {
+  //   const user = jwtService.verify(token, )
+  // }
 
   // public async createAccount(account: AccountInput) {
   //   const

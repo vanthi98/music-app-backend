@@ -15,7 +15,7 @@ import { GqlAuthGuard } from "./graphqlAuth";
     PassportModule.register({ defaultStrategy: "bearer" }),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: "60s" }
+      signOptions: { expiresIn: "900s" }
     })
   ],
   providers: [
