@@ -29,7 +29,7 @@ type AccountToken {
 type Query {
   hello: String!
   user: [UserType!]!
-  getAllAccount: AccountType!
+  getAllAccount: [AccountType!]!
 }
 
 type Mutation {

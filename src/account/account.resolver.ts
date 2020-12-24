@@ -18,7 +18,7 @@ export class AccountResolver {
   }
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => AccountType)
+  @Query(() => [AccountType])
   async getAllAccount(): Promise<AccountType[]> {
     return this.accountService.getAll();
   }
