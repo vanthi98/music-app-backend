@@ -1,16 +1,28 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, BadRequestException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { AccountType } from "./dto/create-account.dto";
 import { AccountInput } from "./inputs/input-account.input";
 import { Account } from "./interfaces/account.interface";
+import { AuthHelper } from "../auth/helpers/auth.helpers";
 
 @Injectable()
 export class AccountService {
   constructor(@InjectModel("Account") private accountModel: Model<Account>) {}
 
   async create(createAccountDto: AccountInput): Promise<AccountType> {
-    const createAccount = new this.accountModel(createAccountDto);
+    const found = await this.findByAccountName(createAccountDto.account_name);
+    if (found) {
+      throw new BadRequestException(
+        `Tài khoản ${createAccountDto.account_name} đã tồn tại`
+      );
+    }
+    const password = await AuthHelper.hash(createAccountDto.password);
+    const createAccount = new this.accountModel({
+      account_name: createAccountDto.account_name,
+      password
+    });
+
     return await createAccount.save();
   }
 

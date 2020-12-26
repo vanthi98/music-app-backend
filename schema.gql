@@ -2,13 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type UserType {
-  id: ID!
-  name: String!
-  age: Int!
-  gender: Boolean!
-}
-
 type AccountType {
   id: ID!
   account_name: String!
@@ -27,23 +20,12 @@ type AccountToken {
 }
 
 type Query {
-  hello: String!
-  user: [UserType!]!
   getAllAccount: [AccountType!]!
 }
 
 type Mutation {
-  createUser(input: UserInput!): UserType!
-  updateUser(input: UserInput!, id: String!): UserType!
-  deleteUser(id: String!): UserType!
   createAccount(input: AccountInput!): AccountType!
   login(input: AccountInput!): AccountToken!
-}
-
-input UserInput {
-  name: String!
-  age: Int!
-  gender: Boolean!
 }
 
 input AccountInput {

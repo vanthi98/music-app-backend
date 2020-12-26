@@ -30,11 +30,14 @@ export class AuthService {
     const found = await this.accountService.findByAccountName(account_name);
     if (!found) {
       throw new NotFoundException(
-        `User with account name ${account_name} does not exist`
+        `Account with account name ${account_name} does not exist`
       );
     }
 
-    const passwordValid: boolean = found.password === password;
+    const passwordValid: boolean = await AuthHelper.validate(
+      password,
+      found.password
+    );
 
     if (!passwordValid) {
       throw new Error(`Invalid password`);
