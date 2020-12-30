@@ -5,10 +5,14 @@ import { AccountType } from "./dto/create-account.dto";
 import { AccountInput } from "./inputs/input-account.input";
 import { Account } from "./interfaces/account.interface";
 import { AuthHelper } from "../auth/helpers/auth.helpers";
+import { ProfileService } from "../profile/profile.service";
 
 @Injectable()
 export class AccountService {
-  constructor(@InjectModel("Account") private accountModel: Model<Account>) {}
+  constructor(
+    @InjectModel("Account") private accountModel: Model<Account>,
+    private readonly profileService: ProfileService
+  ) {}
 
   async create(createAccountDto: AccountInput): Promise<AccountType> {
     const found = await this.findByAccountName(createAccountDto.account_name);
@@ -22,6 +26,8 @@ export class AccountService {
       account_name: createAccountDto.account_name,
       password
     });
+
+    await this.profileService.create(createAccount._id);
 
     return await createAccount.save();
   }

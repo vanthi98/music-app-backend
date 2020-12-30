@@ -5,8 +5,8 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { MongooseModule } from "@nestjs/mongoose";
 import { AccountModule } from "./account/account.module";
 import { AuthModule } from "./auth/auth.module";
-import { ProfileService } from './profile/profile.service';
-import { ProfileModule } from './profile/profile.module';
+import { ProfileService } from "./profile/profile.service";
+import { ProfileModule } from "./profile/profile.module";
 
 @Module({
   imports: [
@@ -23,6 +23,6 @@ import { ProfileModule } from './profile/profile.module';
     ProfileModule
   ],
   controllers: [AppController],
-  providers: [AppService, ProfileService]
+  providers: [AppService]
 })
 export class AppModule {}

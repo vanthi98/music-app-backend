@@ -8,6 +8,17 @@ type AccountType {
   password: String!
 }
 
+type ProfileType {
+  id: ID!
+  account_id: String!
+  first_name: String!
+  last_name: String!
+  email: String!
+  age: Int!
+  gender: Boolean!
+  birthday: String!
+}
+
 type Account {
   id: String
   account_name: String
@@ -25,10 +36,21 @@ type Query {
 
 type Mutation {
   createAccount(input: AccountInput!): AccountType!
+  updateProfile(input: ProfileInput!, id: String!): ProfileType!
   login(input: AccountInput!): AccountToken!
 }
 
 input AccountInput {
   account_name: String!
   password: String!
+}
+
+input ProfileInput {
+  account_id: String
+  first_name: String
+  last_name: String
+  email: String
+  age: Float
+  gender: Boolean
+  birthday: String
 }

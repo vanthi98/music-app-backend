@@ -8,10 +8,12 @@ import { JwtModule } from "@nestjs/jwt";
 import { jwtConstants } from "./constants/jwtKey";
 import { JwtStrategy } from "./jwt.strategy";
 import { GqlAuthGuard } from "./graphqlAuth";
+import { ProfileModule } from "../profile/profile.module";
 
 @Module({
   imports: [
     AccountModule,
+    ProfileModule,
     PassportModule.register({ defaultStrategy: "bearer" }),
     JwtModule.register({
       secret: jwtConstants.secret,

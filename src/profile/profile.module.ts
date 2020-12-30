@@ -13,6 +13,7 @@ import { JwtModule } from "@nestjs/jwt";
       signOptions: { expiresIn: "900s" }
     })
   ],
-  providers: [ProfileResolver, ProfileService]
+  providers: [ProfileResolver, ProfileService],
+  exports: [ProfileService]
 })
 export class ProfileModule {}
