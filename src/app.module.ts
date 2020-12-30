@@ -1,11 +1,12 @@
 import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { UserModule } from "./user/user.module";
 import { GraphQLModule } from "@nestjs/graphql";
 import { MongooseModule } from "@nestjs/mongoose";
-import { AccountModule } from './account/account.module';
-import { AuthModule } from './auth/auth.module';
+import { AccountModule } from "./account/account.module";
+import { AuthModule } from "./auth/auth.module";
+import { ProfileService } from "./profile/profile.service";
+import { ProfileModule } from "./profile/profile.module";
 
 @Module({
   imports: [
@@ -16,10 +17,10 @@ import { AuthModule } from './auth/auth.module';
         origin: true
       }
     }),
-    UserModule,
     MongooseModule.forRoot("mongodb://localhost/music"),
     AccountModule,
-    AuthModule
+    AuthModule,
+    ProfileModule
   ],
   controllers: [AppController],
   providers: [AppService]

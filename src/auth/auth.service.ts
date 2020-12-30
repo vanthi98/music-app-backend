@@ -7,6 +7,7 @@ import { AuthHelper } from "./helpers/auth.helpers";
 import { JwtDto } from "./dto/jwt.dto";
 import { AccountToken } from "./models/account-token";
 import { Account } from "./models/account";
+import { jwtConstants } from "./constants/jwtKey";
 
 @Injectable()
 export class AuthService {
@@ -29,11 +30,14 @@ export class AuthService {
     const found = await this.accountService.findByAccountName(account_name);
     if (!found) {
       throw new NotFoundException(
-        `User with account name ${account_name} does not exist`
+        `Account with account name ${account_name} does not exist`
       );
     }
 
-    const passwordValid: boolean = found.password === password;
+    const passwordValid: boolean = await AuthHelper.validate(
+      password,
+      found.password
+    );
 
     if (!passwordValid) {
       throw new Error(`Invalid password`);
@@ -51,8 +55,14 @@ export class AuthService {
   private signToken(id: string) {
     const payload: JwtDto = { accountId: id };
 
-    return this.jwtService.sign(payload);
+    return this.jwtService.sign(payload, {
+      secret: jwtConstants.secret
+    });
   }
+
+  // private validateUserJwt(token: string) {
+  //   const user = jwtService.verify(token, )
+  // }
 
   // public async createAccount(account: AccountInput) {
   //   const
