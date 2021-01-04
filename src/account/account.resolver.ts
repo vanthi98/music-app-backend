@@ -24,4 +24,12 @@ export class AccountResolver {
     console.log("[user]", user);
     return this.accountService.getAll();
   }
+
+  @Query(() => String)
+  @UseGuards(GqlAuthGuard)
+  async getCurrentAccountId(@CtxUser() user): Promise<String> {
+    const accountName = user.payload.accountId;
+    const account = await this.accountService.findByAccountName(accountName);
+    return account.id;
+  }
 }

@@ -36,4 +36,12 @@ export class ProfileService {
     );
     return await updateProfile;
   }
+
+  async getProfileById(id: string): Promise<ProfileType> {
+    return await this.profileModel.findOne({ _id: id });
+  }
+
+  async getProfileByAccountId(id: string): Promise<ProfileType> {
+    return await this.profileModel.findOne({ account_id: id });
+  }
 }

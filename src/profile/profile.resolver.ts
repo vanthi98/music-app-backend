@@ -15,4 +15,16 @@ export class ProfileResolver {
   ): Promise<ProfileInput> {
     return this.profileService.update(input, id);
   }
+
+  @Query(() => ProfileType)
+  async getProfile(@Args("id") id: string): Promise<ProfileType> {
+    return this.profileService.getProfileById(id);
+  }
+
+  @Query(() => ProfileType)
+  async getProfileByAccountId(
+    @Args("account_id") account_id: string
+  ): Promise<ProfileType> {
+    return this.profileService.getProfileByAccountId(account_id);
+  }
 }
