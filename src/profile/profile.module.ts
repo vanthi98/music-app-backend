@@ -10,7 +10,7 @@ import { JwtModule } from "@nestjs/jwt";
     MongooseModule.forFeature([{ name: "Profile", schema: ProfileSchema }]),
     JwtModule.register({
       secret: "secretKey",
-      signOptions: { expiresIn: "900s" }
+      signOptions: { expiresIn: "9000s" }
     })
   ],
   providers: [ProfileResolver, ProfileService],

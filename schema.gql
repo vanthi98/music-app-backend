@@ -17,6 +17,7 @@ type ProfileType {
   age: Float
   gender: Boolean
   birthday: String
+  avatarUrl: String
 }
 
 type Account {
@@ -56,4 +57,5 @@ input ProfileInput {
   age: Float
   gender: Boolean
   birthday: String
+  avatarUrl: String
 }

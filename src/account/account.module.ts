@@ -13,7 +13,7 @@ import { ProfileModule } from "../profile/profile.module";
     MongooseModule.forFeature([{ name: "Account", schema: AccountSchema }]),
     JwtModule.register({
       secret: "secretKey",
-      signOptions: { expiresIn: "900s" }
+      signOptions: { expiresIn: "9000s" }
     })
   ],
   providers: [AccountService, AccountResolver],

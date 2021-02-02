@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.5.1",
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/graphql": "^7.9.0",
@@ -31,9 +32,11 @@
     "apollo-server-express": "^2.19.0",
     "bcryptjs": "^2.4.3",
     "class-validator": "^0.12.2",
+    "ejs": "^3.1.5",
     "graphql": "^15.4.0",
     "graphql-tools": "^7.0.2",
     "mongoose": "^5.10.17",
+    "nodemailer": "^6.4.17",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",

@@ -17,7 +17,7 @@ import { ProfileModule } from "../profile/profile.module";
     PassportModule.register({ defaultStrategy: "bearer" }),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: "900s" }
+      signOptions: { expiresIn: "9000s" }
     })
   ],
   providers: [

@@ -18,4 +18,6 @@ export class ProfileType {
   readonly gender?: boolean;
   @Field({ nullable: true })
   readonly birthday?: string;
+  @Field({ nullable: true })
+  readonly avatarUrl?: string;
 }
