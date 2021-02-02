@@ -30,7 +30,7 @@ export class AuthService {
     const found = await this.accountService.findByAccountName(account_name);
     if (!found) {
       throw new NotFoundException(
-        `Account with account name ${account_name} does not exist`
+        `Tài khoản có tên ${account_name} không tồn tại`
       );
     }
 
@@ -40,7 +40,7 @@ export class AuthService {
     );
 
     if (!passwordValid) {
-      throw new Error(`Invalid password`);
+      throw new Error(`Sai mật khẩu`);
     }
 
     const access_token = this.signToken(account_name);

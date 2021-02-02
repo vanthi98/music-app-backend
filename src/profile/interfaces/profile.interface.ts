@@ -8,4 +8,5 @@ export interface Profile extends Document {
   readonly age?: number;
   readonly gender?: boolean;
   readonly birthday?: string;
+  readonly avatarUrl?: string;
 }

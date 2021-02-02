@@ -15,4 +15,6 @@ export class ProfileInput {
   readonly gender?: boolean;
   @Field({ nullable: true })
   readonly birthday?: string;
+  @Field({ nullable: true })
+  readonly avatarUrl?: string;
 }

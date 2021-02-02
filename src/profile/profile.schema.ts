@@ -7,5 +7,6 @@ export const ProfileSchema = new mongoose.Schema({
   gender: Boolean,
   age: Number,
   birthday: String,
-  email: String
+  email: String,
+  avatarUrl: String
 });
