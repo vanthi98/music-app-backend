@@ -6,6 +6,7 @@ import { AccountInput } from "./inputs/input-account.input";
 import { Account } from "./interfaces/account.interface";
 import { AuthHelper } from "../auth/helpers/auth.helpers";
 import { ProfileService } from "../profile/profile.service";
+const crypto = require("crypto");
 
 @Injectable()
 export class AccountService {
@@ -45,5 +46,11 @@ export class AccountService {
   async getAll(): Promise<AccountType[]> {
     const result = await this.accountModel.find({});
     return result;
+  }
+
+  async forgotPassword(): Promise<string> {
+    //const account = await this.accountModel.findOne({ account_name });
+    const buf = await crypto.randomBytes(10).toString("hex");
+    return buf;
   }
 }

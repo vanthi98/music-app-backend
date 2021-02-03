@@ -34,6 +34,7 @@ type AccountToken {
 type Query {
   getAllAccount: [AccountType!]!
   getCurrentAccountId: String!
+  getRandom: String!
   getProfile(id: String!): ProfileType!
   getProfileByAccountId(account_id: String!): ProfileType!
 }

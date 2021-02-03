@@ -15,8 +15,11 @@ export class AppService {
         to: "levanthi.tl9@gmail.com", // list of receivers
         from: "noreply@nestjs.com", // sender address
         subject: "Testing Nest MailerModule ✔", // Subject line
-        text: "welcome", // plaintext body
-        html: "<b>welcome</b>" // HTML body content
+        template: "index",
+        context: {
+          code: "cf1a3f828287",
+          username: "Văn Thi"
+        }
       })
       .then(result => {
         console.log(result);

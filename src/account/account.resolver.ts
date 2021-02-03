@@ -32,4 +32,11 @@ export class AccountResolver {
     const account = await this.accountService.findByAccountName(accountName);
     return account.id;
   }
+
+  @Query(() => String)
+  @UseGuards(GqlAuthGuard)
+  async getRandom(@Args("input") input: AccountInput): Promise<String> {
+    const account = await this.accountService.forgotPassword(input);
+    return account;
+  }
 }
