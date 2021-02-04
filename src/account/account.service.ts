@@ -135,6 +135,6 @@ export class AccountService {
       { upsert: true }
     );
 
-    return result;
+    if (!result) return result;
   }
 }
