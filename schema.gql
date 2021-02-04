@@ -6,6 +6,8 @@ type AccountType {
   id: ID!
   account_name: String!
   password: String!
+  resetPasswordToken: String!
+  resetPasswordExpires: Float!
 }
 
 type ProfileType {
@@ -34,19 +36,26 @@ type AccountToken {
 type Query {
   getAllAccount: [AccountType!]!
   getCurrentAccountId: String!
-  getRandom: String!
   getProfile(id: String!): ProfileType!
   getProfileByAccountId(account_id: String!): ProfileType!
 }
 
 type Mutation {
   createAccount(input: AccountInput!): AccountType!
+  resetAccount(input: String!): AccountType!
+  confirmResetPasswordToken(token: String!): Boolean!
+  resetAccountPassword(input: ResetPasswordInput!): AccountType!
   updateProfile(input: ProfileInput!, id: String!): ProfileType!
   login(input: AccountInput!): AccountToken!
 }
 
 input AccountInput {
   account_name: String!
+  password: String!
+}
+
+input ResetPasswordInput {
+  token: String!
   password: String!
 }
 

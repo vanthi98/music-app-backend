@@ -8,4 +8,8 @@ export class AccountType {
   readonly account_name: string;
   @Field()
   readonly password: string;
+  @Field()
+  resetPasswordToken?: string;
+  @Field()
+  resetPasswordExpires?: number;
 }

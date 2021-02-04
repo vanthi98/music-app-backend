@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { AccountService } from "./account.service";
 import { AccountType } from "./dto/create-account.dto";
 import { AccountInput } from "./inputs/input-account.input";
+import { ResetPasswordInput } from "./inputs/input-resetPassword.input";
 import { Account } from "./interfaces/account.interface";
 import { UseGuards } from "@nestjs/common";
 import { GqlAuthGuard } from "../auth/graphqlAuth";
@@ -33,10 +34,29 @@ export class AccountResolver {
     return account.id;
   }
 
-  @Query(() => String)
-  @UseGuards(GqlAuthGuard)
-  async getRandom(@Args("input") input: AccountInput): Promise<String> {
+  @Mutation(() => AccountType)
+  async resetAccount(@Args("input") input: string): Promise<AccountType> {
     const account = await this.accountService.forgotPassword(input);
     return account;
+  }
+
+  @Mutation(() => Boolean)
+  async confirmResetPasswordToken(
+    @Args("token") token: string
+  ): Promise<Boolean> {
+    const isValidate = await this.accountService.confirmForgotPasswordToken(
+      token
+    );
+    return isValidate;
+  }
+
+  @Mutation(() => AccountType)
+  async resetAccountPassword(
+    @Args("input") input: ResetPasswordInput
+  ): Promise<AccountType> {
+    const newPasswordAccount = await this.accountService.resetForgotPassword(
+      input
+    );
+    return newPasswordAccount;
   }
 }
