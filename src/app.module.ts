@@ -8,7 +8,6 @@ import { AuthModule } from "./auth/auth.module";
 import { ProfileModule } from "./profile/profile.module";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
-import { MailerService } from './mailer/mailer.service';
 
 @Module({
   imports: [
@@ -39,7 +38,7 @@ import { MailerService } from './mailer/mailer.service';
         dir: process.cwd() + "/src/template",
         adapter: new EjsAdapter(),
         options: {
-          strict: true
+          strict: false
         }
       }
     }),
@@ -48,6 +47,6 @@ import { MailerService } from './mailer/mailer.service';
     ProfileModule
   ],
   controllers: [AppController],
-  providers: [AppService, MailerService]
+  providers: [AppService]
 })
 export class AppModule {}

@@ -73,23 +73,23 @@ export class AccountService {
       { upsert: true }
     );
 
-    // this.mailerService
-    //   .sendMail({
-    //     to: account_name, // list of receivers
-    //     from: "noreply@nestjs.com", // sender address
-    //     subject: "Testing Nest MailerModule ✔", // Subject line
-    //     template: "index",
-    //     context: {
-    //       code: token,
-    //       username: "Văn Thi"
-    //     }
-    //   })
-    //   .then(result => {
-    //     console.log(result);
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    this.mailerService
+      .sendMail({
+        to: account_name, // list of receivers
+        from: "noreply@nestjs.com", // sender address
+        subject: "Testing Nest MailerModule ✔", // Subject line
+        template: "index",
+        context: {
+          code: token,
+          username: "Văn Thi"
+        }
+      })
+      .then(result => {
+        console.log(result);
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
     return result;
   }
