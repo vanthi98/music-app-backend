@@ -9,15 +9,19 @@ import { ProfileInput } from "./inputs/input-profile.input";
 export class ProfileService {
   constructor(@InjectModel("Profile") private profileModel: Model<Profile>) {}
 
-  async create(accountId: string): Promise<ProfileType> {
+  async create(
+    accountId: string,
+    profileData: ProfileInput
+  ): Promise<ProfileType> {
+    const { first_name, last_name, email, gender, age, birthday } = profileData;
     const emptyProfile: Profile = {
       account_id: "",
-      first_name: "",
-      last_name: "",
-      email: "",
-      gender: null,
-      age: null,
-      birthday: ""
+      first_name,
+      last_name,
+      email,
+      gender,
+      age,
+      birthday
     };
     const createProfile = new this.profileModel({
       ...emptyProfile,
@@ -43,5 +47,9 @@ export class ProfileService {
 
   async getProfileByAccountId(id: string): Promise<ProfileType> {
     return await this.profileModel.findOne({ account_id: id });
+  }
+
+  async getProfileByEmail(email: string): Promise<ProfileType> {
+    return await this.profileModel.findOne({ email });
   }
 }
