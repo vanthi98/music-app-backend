@@ -7,6 +7,7 @@ import { ResetPasswordInput } from "./inputs/input-resetPassword.input";
 import { Account } from "./interfaces/account.interface";
 import { AuthHelper } from "../auth/helpers/auth.helpers";
 import { ProfileService } from "../profile/profile.service";
+import { ProfileInput } from "../profile/inputs/input-profile.input";
 import { MailerService } from "@nestjs-modules/mailer";
 const crypto = require("crypto");
 
@@ -19,19 +20,22 @@ export class AccountService {
   ) {}
 
   async create(createAccountDto: AccountInput): Promise<AccountType> {
-    const found = await this.findByAccountName(createAccountDto.account_name);
+    console.log(createAccountDto);
+    const found: AccountType = await this.findByAccountName(
+      createAccountDto.account_name
+    );
     if (found) {
       throw new BadRequestException(
         `Tài khoản ${createAccountDto.account_name} đã tồn tại`
       );
     }
-    const password = await AuthHelper.hash(createAccountDto.password);
+    const password: string = await AuthHelper.hash(createAccountDto.password);
     const createAccount = new this.accountModel({
       account_name: createAccountDto.account_name,
       password
     });
 
-    await this.profileService.create(createAccount._id);
+    await this.profileService.create(createAccount._id, createAccountDto);
 
     return await createAccount.save();
   }
@@ -59,23 +63,25 @@ export class AccountService {
     return result;
   }
 
-  async forgotPassword(account_name: string): Promise<AccountType> {
-    const found = await this.findByAccountName(account_name);
+  async forgotPassword(email: string): Promise<AccountType> {
+    //const found = await this.findByAccountName(account_name);
+    const found = await this.profileService.getProfileByEmail(email);
     if (!found) {
-      throw new BadRequestException(`Tài khoản ${account_name} không tồn tại`);
+      throw new BadRequestException(`Email ${email} không tồn tại`);
     }
+    const { account_id } = found;
     console.log(found);
     const token = await crypto.randomBytes(10).toString("hex");
 
     const result = await this.accountModel.findOneAndUpdate(
-      { account_name },
+      { _id: account_id },
       { resetPasswordToken: token, resetPasswordExpires: Date.now() + 900000 },
-      { upsert: true }
+      { upsert: true, new: true }
     );
 
     this.mailerService
       .sendMail({
-        to: account_name, // list of receivers
+        to: email, // list of receivers
         from: "noreply@nestjs.com", // sender address
         subject: "Testing Nest MailerModule ✔", // Subject line
         template: "index",
@@ -90,7 +96,6 @@ export class AccountService {
       .catch(error => {
         console.log(error);
       });
-
     return result;
   }
 
@@ -102,8 +107,6 @@ export class AccountService {
     }
 
     const { resetPasswordExpires } = found;
-    console.log(resetPasswordExpires);
-    console.log(Date.now());
     if (resetPasswordExpires < Date.now()) {
       throw new BadRequestException(
         `Token đã hết hạn, vui lòng yêu cầu 1 token mới`
@@ -121,20 +124,24 @@ export class AccountService {
     }
 
     const { resetPasswordExpires } = found;
-    console.log(resetPasswordExpires);
-    console.log(Date.now());
     if (resetPasswordExpires < Date.now()) {
       throw new BadRequestException(
         `Token đã hết hạn, vui lòng yêu cầu 1 token mới`
       );
     }
 
+    const hasedPassword: string = await AuthHelper.hash(password);
+
     const result = await this.accountModel.findOneAndUpdate(
-      { password },
-      { resetPasswordToken: undefined, resetPasswordExpires: undefined },
-      { upsert: true }
+      { resetPasswordToken: token },
+      {
+        resetPasswordToken: undefined,
+        resetPasswordExpires: undefined,
+        password: hasedPassword
+      },
+      { upsert: true, new: true }
     );
 
-    if (!result) return result;
+    if (result) return result;
   }
 }

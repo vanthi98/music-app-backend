@@ -15,7 +15,7 @@ export class AccountResolver {
   @Mutation(() => AccountType)
   async createAccount(
     @Args("input") input: AccountInput
-  ): Promise<AccountInput> {
+  ): Promise<AccountType> {
     return this.accountService.create(input);
   }
 

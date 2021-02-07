@@ -5,4 +5,16 @@ export class AccountInput {
   readonly account_name: string;
   @Field()
   readonly password: string;
+  @Field()
+  readonly email: string;
+  @Field()
+  readonly first_name: string;
+  @Field()
+  readonly last_name: string;
+  @Field()
+  readonly age: number;
+  @Field()
+  readonly gender: boolean;
+  @Field()
+  readonly birthday: string;
 }
