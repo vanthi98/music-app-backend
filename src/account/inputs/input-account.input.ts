@@ -11,8 +11,8 @@ export class AccountInput {
   readonly first_name: string;
   @Field()
   readonly last_name: string;
-  @Field()
-  readonly age: number;
+  @Field({ nullable: true })
+  readonly age?: number;
   @Field()
   readonly gender: boolean;
   @Field()

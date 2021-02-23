@@ -55,7 +55,7 @@ input AccountInput {
   email: String!
   first_name: String!
   last_name: String!
-  age: Float!
+  age: Float
   gender: Boolean!
   birthday: String!
 }

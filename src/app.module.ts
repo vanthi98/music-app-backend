@@ -18,9 +18,10 @@ import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
         origin: true
       }
     }),
-    MongooseModule.forRoot(
-      "mongodb+srv://vanthi1211:react19001560@cluster0.qe56j.mongodb.net/music?retryWrites=true&w=majority"
-    ),
+    // MongooseModule.forRoot(
+    //   "mongodb+srv://vanthi1211:react19001560@cluster0.qe56j.mongodb.net/music?retryWrites=true&w=majority"
+    // ),
+    MongooseModule.forRoot("mongodb://localhost:27017/music"),
     MailerModule.forRoot({
       transport: {
         host: "smtp.gmail.com",
