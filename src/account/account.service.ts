@@ -8,6 +8,7 @@ import { Account } from "./interfaces/account.interface";
 import { AuthHelper } from "../auth/helpers/auth.helpers";
 import { ProfileService } from "../profile/profile.service";
 import { ProfileInput } from "../profile/inputs/input-profile.input";
+import { ProfileType } from "../profile/dto/create-profile.dto";
 import { MailerService } from "@nestjs-modules/mailer";
 const crypto = require("crypto");
 
@@ -27,6 +28,14 @@ export class AccountService {
     if (found) {
       throw new BadRequestException(
         `Tài khoản ${createAccountDto.account_name} đã tồn tại`
+      );
+    }
+    const foundEmail: ProfileType = await this.profileService.getProfileByEmail(
+      createAccountDto.email
+    );
+    if (foundEmail) {
+      throw new BadRequestException(
+        `Email ${createAccountDto.email} đã tồn tại`
       );
     }
     const password: string = await AuthHelper.hash(createAccountDto.password);

@@ -46,7 +46,7 @@ type Mutation {
   confirmResetPasswordToken(token: String!): Boolean!
   resetAccountPassword(input: ResetPasswordInput!): AccountType!
   updateProfile(input: ProfileInput!, id: String!): ProfileType!
-  login(input: AccountInput!): AccountToken!
+  login(input: LoginInput!): AccountToken!
 }
 
 input AccountInput {
@@ -74,4 +74,9 @@ input ProfileInput {
   gender: Boolean
   birthday: String
   avatarUrl: String
+}
+
+input LoginInput {
+  account_name: String!
+  password: String!
 }

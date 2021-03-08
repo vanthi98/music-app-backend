@@ -8,6 +8,7 @@ import { JwtDto } from "./dto/jwt.dto";
 import { AccountToken } from "./models/account-token";
 import { Account } from "./models/account";
 import { jwtConstants } from "./constants/jwtKey";
+import { LoginInput } from "./inputs/input-login.input";
 
 @Injectable()
 export class AuthService {
@@ -25,7 +26,7 @@ export class AuthService {
     return null;
   }
 
-  public async login(account: AccountInput): Promise<AccountToken> {
+  public async login(account: LoginInput): Promise<AccountToken> {
     const { account_name, password } = account;
     const found = await this.accountService.findByAccountName(account_name);
     if (!found) {

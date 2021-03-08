@@ -1,3 +1,4 @@
+import { LoginInput } from "./inputs/input-login.input";
 import { UseGuards } from "@nestjs/common";
 import { Resolver, Mutation, Args } from "@nestjs/graphql";
 import { AuthService } from "./auth.service";
@@ -13,7 +14,7 @@ export class AuthResolver {
   //@UseGuards(GqlAuthGuard)
   @Mutation(() => AccountToken)
   async login(
-    @Args({ name: "input", type: () => AccountInput }) input: AccountInput
+    @Args({ name: "input", type: () => LoginInput }) input: LoginInput
   ): Promise<AccountToken> {
     return this.authService.login(input);
   }
