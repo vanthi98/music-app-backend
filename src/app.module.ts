@@ -8,6 +8,9 @@ import { AuthModule } from "./auth/auth.module";
 import { ProfileModule } from "./profile/profile.module";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
+import { SongService } from './song/song.service';
+import { SongResolver } from './song/song.resolver';
+import { SongModule } from './song/song.module';
 
 @Module({
   imports: [
@@ -45,9 +48,10 @@ import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
     }),
     AccountModule,
     AuthModule,
-    ProfileModule
+    ProfileModule,
+    SongModule
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService, SongService, SongResolver]
 })
 export class AppModule {}

@@ -60,12 +60,4 @@ export class AuthService {
       secret: jwtConstants.secret
     });
   }
-
-  // private validateUserJwt(token: string) {
-  //   const user = jwtService.verify(token, )
-  // }
-
-  // public async createAccount(account: AccountInput) {
-  //   const
-  // }
 }
