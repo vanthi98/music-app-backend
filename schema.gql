@@ -33,11 +33,18 @@ type AccountToken {
   account: Account!
 }
 
+type TestType {
+  id: ID!
+  title: String!
+}
+
 type Query {
   getAllAccount: [AccountType!]!
   getCurrentAccountId: String!
   getProfile(id: String!): ProfileType!
   getProfileByAccountId(account_id: String!): ProfileType!
+  getAllTest: [TestType!]!
+  getOneTest(title: String!): TestType!
 }
 
 type Mutation {
@@ -47,6 +54,8 @@ type Mutation {
   resetAccountPassword(input: ResetPasswordInput!): AccountType!
   updateProfile(input: ProfileInput!, id: String!): ProfileType!
   login(input: LoginInput!): AccountToken!
+  insertTest(title: String!): String!
+  deleteTest(title: String!): String!
 }
 
 input AccountInput {
