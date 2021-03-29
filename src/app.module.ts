@@ -6,8 +6,10 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { AccountModule } from "./account/account.module";
 import { AuthModule } from "./auth/auth.module";
 import { ProfileModule } from "./profile/profile.module";
+import { TestModule } from './test/test.module';
 import { MailerModule } from "@nestjs-modules/mailer";
 import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
+import { Test } from "@nestjs/testing";
 
 @Module({
   imports: [
@@ -45,7 +47,8 @@ import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
     }),
     AccountModule,
     AuthModule,
-    ProfileModule
+    ProfileModule,
+    TestModule
   ],
   controllers: [AppController],
   providers: [AppService]
