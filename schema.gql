@@ -52,6 +52,9 @@ type SongType {
 
 type UploadSongType {
   id: ID!
+type TestType {
+  id: ID!
+  title: String!
 }
 
 type Query {
@@ -61,6 +64,8 @@ type Query {
   getProfileByAccountId(account_id: String!): ProfileType!
   getAllSong: [SongType!]!
   getSongByCurrentAccount: [SongType!]!
+  getAllTest: [TestType!]!
+  getOneTest(title: String!): TestType!
 }
 
 type Mutation {
@@ -73,6 +78,8 @@ type Mutation {
   uploadSong(input: SongInput!): UploadSongType!
   likeSong(song_id: String!): String!
   listenSong(song_id: String!): String!
+  insertTest(title: String!): String!
+  deleteTest(title: String!): String!
 }
 
 input AccountInput {
