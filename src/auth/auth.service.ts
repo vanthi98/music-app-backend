@@ -27,12 +27,10 @@ export class AuthService {
   }
 
   public async login(account: LoginInput): Promise<AccountToken> {
-    const { account_name, password } = account;
-    const found = await this.accountService.findByAccountName(account_name);
+    const { email, password } = account;
+    const found = await this.accountService.findByEmail(email);
     if (!found) {
-      throw new NotFoundException(
-        `Tài khoản có tên ${account_name} không tồn tại`
-      );
+      throw new NotFoundException(`Tài khoản có email ${email} không tồn tại`);
     }
 
     const passwordValid: boolean = await AuthHelper.validate(
@@ -44,8 +42,7 @@ export class AuthService {
       throw new Error(`Sai mật khẩu`);
     }
 
-    const access_token = this.signToken(account_name);
-    console.log(access_token);
+    const access_token = this.signToken(email);
 
     return {
       account: found,

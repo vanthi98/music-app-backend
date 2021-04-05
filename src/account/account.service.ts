@@ -10,7 +10,20 @@ import { ProfileService } from "../profile/profile.service";
 import { ProfileInput } from "../profile/inputs/input-profile.input";
 import { ProfileType } from "../profile/dto/create-profile.dto";
 import { MailerService } from "@nestjs-modules/mailer";
-const crypto = require("crypto");
+import crypto from "crypto-js";
+
+const makeid = async length => {
+  let result = "";
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+};
+
+console.log(makeid(5));
 
 @Injectable()
 export class AccountService {
@@ -21,26 +34,16 @@ export class AccountService {
   ) {}
 
   async create(createAccountDto: AccountInput): Promise<AccountType> {
-    console.log(createAccountDto);
-    const found: AccountType = await this.findByAccountName(
-      createAccountDto.account_name
-    );
+    const found: AccountType = await this.findByEmail(createAccountDto.email);
     if (found) {
       throw new BadRequestException(
-        `Tài khoản ${createAccountDto.account_name} đã tồn tại`
+        `Tài khoản ${createAccountDto.email} đã tồn tại`
       );
     }
-    const foundEmail: ProfileType = await this.profileService.getProfileByEmail(
-      createAccountDto.email
-    );
-    if (foundEmail) {
-      throw new BadRequestException(
-        `Email ${createAccountDto.email} đã tồn tại`
-      );
-    }
+
     const password: string = await AuthHelper.hash(createAccountDto.password);
     const createAccount = new this.accountModel({
-      account_name: createAccountDto.account_name,
+      email: createAccountDto.email,
       password
     });
 
@@ -55,7 +58,11 @@ export class AccountService {
 
   async findByAccountName(account_name: string): Promise<AccountType> {
     const result = await this.accountModel.findOne({ account_name });
-    console.log(result);
+    return result;
+  }
+
+  async findByEmail(email: string): Promise<AccountType> {
+    const result = await this.accountModel.findOne({ email });
     return result;
   }
 
@@ -63,7 +70,6 @@ export class AccountService {
     const result = await this.accountModel.findOne({
       resetPasswordToken: token
     });
-    console.log(result);
     return result;
   }
 
@@ -72,18 +78,17 @@ export class AccountService {
     return result;
   }
 
-  async forgotPassword(email: string): Promise<AccountType> {
-    //const found = await this.findByAccountName(account_name);
-    const found = await this.profileService.getProfileByEmail(email);
+  async forgotPassword(email: string): Promise<any> {
+    const found = await this.findByEmail(email);
     if (!found) {
       throw new BadRequestException(`Email ${email} không tồn tại`);
     }
-    const { account_id } = found;
-    console.log(found);
-    const token = await crypto.randomBytes(10).toString("hex");
+
+    const token = await makeid(20);
+    console.log(token);
 
     const result = await this.accountModel.findOneAndUpdate(
-      { _id: account_id },
+      { _id: found.id },
       { resetPasswordToken: token, resetPasswordExpires: Date.now() + 900000 },
       { upsert: true, new: true }
     );

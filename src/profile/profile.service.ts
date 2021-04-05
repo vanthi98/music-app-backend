@@ -13,12 +13,19 @@ export class ProfileService {
     accountId: string,
     profileData: ProfileInput
   ): Promise<ProfileType> {
-    const { first_name, last_name, email, gender, age, birthday } = profileData;
+    const {
+      first_name,
+      last_name,
+      account_name,
+      gender,
+      age,
+      birthday
+    } = profileData;
     const emptyProfile: Profile = {
       account_id: "",
       first_name,
       last_name,
-      email,
+      account_name,
       gender,
       age,
       birthday
@@ -31,6 +38,7 @@ export class ProfileService {
   }
 
   async update(profileDto: Profile, profileId: string): Promise<ProfileType> {
+    console.log(profileDto);
     const updateProfile = await this.profileModel.findByIdAndUpdate(
       profileId,
       profileDto,

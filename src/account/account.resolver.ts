@@ -20,17 +20,15 @@ export class AccountResolver {
   }
 
   @Query(() => [AccountType])
-  @UseGuards(GqlAuthGuard)
-  async getAllAccount(@CtxUser() user): Promise<AccountType[]> {
-    console.log("[user]", user);
+  async getAllAccount(): Promise<AccountType[]> {
     return this.accountService.getAll();
   }
 
   @Query(() => String)
   @UseGuards(GqlAuthGuard)
-  async getCurrentAccountId(@CtxUser() user): Promise<String> {
-    const accountName = user.payload.accountId;
-    const account = await this.accountService.findByAccountName(accountName);
+  async getCurrentAccountId(@CtxUser() user): Promise<string> {
+    const email = user.payload.accountId;
+    const account = await this.accountService.findByEmail(email);
     return account.id;
   }
 
@@ -43,7 +41,7 @@ export class AccountResolver {
   @Mutation(() => Boolean)
   async confirmResetPasswordToken(
     @Args("token") token: string
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     const isValidate = await this.accountService.confirmForgotPasswordToken(
       token
     );

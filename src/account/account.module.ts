@@ -4,7 +4,6 @@ import { AccountResolver } from "./account.resolver";
 import { AccountSchema } from "./account.schema";
 import { AccountService } from "./account.service";
 import { JwtModule } from "@nestjs/jwt";
-import { ProfileService } from "../profile/profile.service";
 import { ProfileModule } from "../profile/profile.module";
 
 @Module({

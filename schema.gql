@@ -4,7 +4,7 @@
 
 type AccountType {
   id: ID!
-  account_name: String!
+  email: String!
   password: String!
   resetPasswordToken: String
   resetPasswordExpires: Float
@@ -20,6 +20,7 @@ type ProfileType {
   gender: Boolean
   birthday: String
   avatarUrl: String
+  listLikedSong: [String!]
 }
 
 type Account {
@@ -33,11 +34,33 @@ type AccountToken {
   account: Account!
 }
 
+type SongType {
+  _id: ID!
+  song_name: String!
+  song_url: String!
+  song_image_url: String!
+  lyric: String!
+  author: String!
+  like: Float!
+  comment: Float!
+  listen: Float!
+  share: Float!
+  uploader: String!
+  duration: Float!
+  listLikedUser: [String!]
+}
+
+type UploadSongType {
+  id: ID!
+}
+
 type Query {
   getAllAccount: [AccountType!]!
   getCurrentAccountId: String!
   getProfile(id: String!): ProfileType!
   getProfileByAccountId(account_id: String!): ProfileType!
+  getAllSong: [SongType!]!
+  getSongByCurrentAccount: [SongType!]!
 }
 
 type Mutation {
@@ -47,6 +70,9 @@ type Mutation {
   resetAccountPassword(input: ResetPasswordInput!): AccountType!
   updateProfile(input: ProfileInput!, id: String!): ProfileType!
   login(input: LoginInput!): AccountToken!
+  uploadSong(input: SongInput!): UploadSongType!
+  likeSong(song_id: String!): String!
+  listenSong(song_id: String!): String!
 }
 
 input AccountInput {
@@ -70,6 +96,7 @@ input ProfileInput {
   first_name: String
   last_name: String
   email: String
+  account_name: String
   age: Float
   gender: Boolean
   birthday: String
@@ -77,6 +104,14 @@ input ProfileInput {
 }
 
 input LoginInput {
-  account_name: String!
+  email: String!
   password: String!
+}
+
+input SongInput {
+  song_name: String!
+  song_url: String!
+  song_image_url: String
+  lyric: String
+  author: String
 }

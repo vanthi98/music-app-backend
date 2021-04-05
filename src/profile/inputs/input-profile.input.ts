@@ -10,6 +10,8 @@ export class ProfileInput {
   @Field({ nullable: true })
   readonly email?: string;
   @Field({ nullable: true })
+  readonly account_name?: string;
+  @Field({ nullable: true })
   readonly age?: number;
   @Field({ nullable: true })
   readonly gender?: boolean;

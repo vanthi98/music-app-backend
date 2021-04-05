@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+const { Schema } = mongoose;
 
 export const ProfileSchema = new mongoose.Schema({
   account_id: String,
@@ -7,6 +8,7 @@ export const ProfileSchema = new mongoose.Schema({
   gender: Boolean,
   age: Number,
   birthday: String,
-  email: String,
-  avatarUrl: String
+  account_name: String,
+  avatarUrl: String,
+  listLikedSong: [{ type: Schema.Types.ObjectId, ref: "Song" }]
 });

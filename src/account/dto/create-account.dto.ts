@@ -4,7 +4,7 @@ export class AccountType {
   @Field(() => ID)
   readonly id?: string;
   @Field()
-  readonly account_name: string;
+  readonly email: string;
   @Field()
   readonly password: string;
   @Field({ nullable: true })
