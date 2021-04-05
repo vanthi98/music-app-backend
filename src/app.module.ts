@@ -6,9 +6,10 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { AccountModule } from "./account/account.module";
 import { AuthModule } from "./auth/auth.module";
 import { ProfileModule } from "./profile/profile.module";
-import { TestModule } from './test/test.module';
+import { TestModule } from "./test/test.module";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
+import { SongModule } from "./song/song.module";
 import { Test } from "@nestjs/testing";
 
 @Module({
@@ -48,6 +49,7 @@ import { Test } from "@nestjs/testing";
     AccountModule,
     AuthModule,
     ProfileModule,
+    SongModule,
     TestModule
   ],
   controllers: [AppController],

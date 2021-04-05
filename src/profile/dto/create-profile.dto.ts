@@ -20,4 +20,6 @@ export class ProfileType {
   readonly birthday?: string;
   @Field({ nullable: true })
   readonly avatarUrl?: string;
+  @Field(() => [String], { nullable: true })
+  readonly listLikedSong?: string[];
 }

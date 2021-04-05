@@ -4,9 +4,10 @@ export interface Profile extends Document {
   readonly account_id?: string;
   readonly first_name?: string;
   readonly last_name?: string;
-  readonly email?: string;
+  readonly account_name?: string;
   readonly age?: number;
   readonly gender?: boolean;
   readonly birthday?: string;
   readonly avatarUrl?: string;
+  readonly listLikedSong?: Array<string>;
 }
