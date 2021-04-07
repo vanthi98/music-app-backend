@@ -10,4 +10,6 @@ export interface Profile extends Document {
   readonly birthday?: string;
   readonly avatarUrl?: string;
   readonly listLikedSong?: Array<string>;
+  readonly listFollowers?: Array<string>;
+  readonly listFollowings?: Array<string>;
 }

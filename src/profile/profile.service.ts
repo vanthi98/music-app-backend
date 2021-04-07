@@ -60,4 +60,8 @@ export class ProfileService {
   async getProfileByEmail(email: string): Promise<ProfileType> {
     return await this.profileModel.findOne({ email });
   }
+
+  async follow(user_id: string, follower_id: string): Promise<string> {}
+
+  async unFollow(user_id: string, follower_id: string): Promise<string> {}
 }

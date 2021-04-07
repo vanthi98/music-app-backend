@@ -34,6 +34,11 @@ type AccountToken {
   account: Account!
 }
 
+type TestType {
+  id: ID!
+  title: String!
+}
+
 type SongType {
   _id: ID!
   song_name: String!
@@ -52,9 +57,6 @@ type SongType {
 
 type UploadSongType {
   id: ID!
-type TestType {
-  id: ID!
-  title: String!
 }
 
 type Query {
@@ -77,6 +79,7 @@ type Mutation {
   login(input: LoginInput!): AccountToken!
   uploadSong(input: SongInput!): UploadSongType!
   likeSong(song_id: String!): String!
+  unlikeSong(song_id: String!): String!
   listenSong(song_id: String!): String!
   insertTest(title: String!): String!
   deleteTest(title: String!): String!

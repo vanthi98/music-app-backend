@@ -2,14 +2,22 @@ version: "3.8"
 
 services:
   app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: music-app-backend:v1
     ports:
       - "4000:4000"
     restart: unless-stopped
   mongodb:
     image: mongo:4.4.4-bionic
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: music
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
     ports:
-      - 27018:27017
+      - 27017:27017
   mongo-seed:
     image: mongo:4.4.4-bionic
     links:

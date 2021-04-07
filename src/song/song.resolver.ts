@@ -39,6 +39,16 @@ export class SongResolver {
   ): Promise<any> {
     return this.songService.likeSong(song_id, currentUser);
   }
+
+  @Mutation(() => String)
+  @UseGuards(GqlAuthGuard)
+  async unlikeSong(
+    @CtxUser() currentUser,
+    @Args("song_id") song_id: string
+  ): Promise<any> {
+    return this.songService.unlikeSong(song_id, currentUser);
+  }
+
   @Mutation(() => String)
   async listenSong(@Args("song_id") song_id: string): Promise<any> {
     return this.songService.ListenSong(song_id);

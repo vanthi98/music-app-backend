@@ -159,6 +159,61 @@ export class SongService {
   }
 
   async unlikeSong(song_id: string, currentUser: any): Promise<any> {
-    return;
+    const song = await this.songModel.findOne({ _id: song_id });
+    if (!song) {
+      throw new Error("Cant find song");
+    }
+    const { uploader } = song;
+    if (uploader === currentUser.payload.accountId) {
+      throw new Error("You can not like the song what you uploaded");
+    } else {
+      const user = await this.accountService.findByEmail(
+        currentUser.payload.accountId
+      );
+      if (!user) {
+        throw new Error("Cant find user");
+      }
+      const account_id = user.id;
+      const profile = await this.profileService.getProfileByAccountId(
+        account_id
+      );
+      const { listLikedSong } = profile;
+      if (!listLikedSong || listLikedSong.length === 0) {
+        throw new Error("Error occur when unlike song");
+      } else {
+        if (listLikedSong.indexOf(song_id) > -1) {
+          const temp = listLikedSong;
+          temp.splice(listLikedSong.indexOf(song_id), 1);
+          await this.profileService.update(
+            {
+              listLikedSong: temp
+            },
+            profile.id
+          );
+        } else {
+          throw new Error("This song is not exist in your liked list");
+        }
+      }
+      const { listLikedUser } = song;
+      if (!listLikedUser || listLikedUser.length === 0) {
+        throw new Error("Error occur when unlike song");
+      } else {
+        if (listLikedUser.indexOf(song_id) > -1) {
+          const temp = listLikedUser;
+          temp.splice(listLikedUser.indexOf(song_id), 1);
+          await this.songModel.findOneAndUpdate(
+            { _id: song_id },
+            {
+              listLikedUser: temp
+            },
+            { new: true }
+          );
+        } else {
+          throw new Error(
+            "This user is not exist in list liked user of this song"
+          );
+        }
+      }
+    }
   }
 }
