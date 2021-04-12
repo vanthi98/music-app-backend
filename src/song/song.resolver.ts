@@ -31,6 +31,13 @@ export class SongResolver {
     return this.songService.getUploadedSong(currentUser);
   }
 
+  @Query(() => [SongType])
+  async getSongByAccount(
+    @Args("account_email") account_email: string
+  ): Promise<Array<SongType>> {
+    return this.songService.getUploadedSongByAccount(account_email);
+  }
+
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard)
   async likeSong(

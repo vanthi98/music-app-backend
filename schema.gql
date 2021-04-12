@@ -10,35 +10,6 @@ type AccountType {
   resetPasswordExpires: Float
 }
 
-type ProfileType {
-  id: ID!
-  account_id: String
-  first_name: String
-  last_name: String
-  email: String
-  age: Float
-  gender: Boolean
-  birthday: String
-  avatarUrl: String
-  listLikedSong: [String!]
-}
-
-type Account {
-  id: String
-  account_name: String
-  password: String
-}
-
-type AccountToken {
-  access_token: String!
-  account: Account!
-}
-
-type TestType {
-  id: ID!
-  title: String!
-}
-
 type SongType {
   _id: ID!
   song_name: String!
@@ -59,15 +30,52 @@ type UploadSongType {
   id: ID!
 }
 
+type ProfileType {
+  id: ID!
+  account_id: String
+  first_name: String
+  last_name: String
+  email: String
+  age: Float
+  gender: Boolean
+  birthday: String
+  avatarUrl: String
+  account_name: String
+  listLikedSong: [SongType!]
+  listFollowings: [SongType!]
+  listFollowers: [SongType!]
+}
+
+type Account {
+  id: String
+  account_name: String
+  password: String
+}
+
+type AccountToken {
+  access_token: String!
+  account: Account!
+}
+
+type TestType {
+  id: ID!
+  title: String!
+}
+
 type Query {
   getAllAccount: [AccountType!]!
+  getAccount(id: String!): AccountType!
   getCurrentAccountId: String!
   getProfile(id: String!): ProfileType!
   getProfileByAccountId(account_id: String!): ProfileType!
-  getAllSong: [SongType!]!
-  getSongByCurrentAccount: [SongType!]!
+  getProfileByEmail(email: String!): ProfileType!
+  getCurrentAccountIdAndSong: ProfileType!
+  checkFollow(follow_id: String!): String!
   getAllTest: [TestType!]!
   getOneTest(title: String!): TestType!
+  getAllSong: [SongType!]!
+  getSongByCurrentAccount: [SongType!]!
+  getSongByAccount(account_email: String!): [SongType!]!
 }
 
 type Mutation {
@@ -75,14 +83,16 @@ type Mutation {
   resetAccount(input: String!): AccountType!
   confirmResetPasswordToken(token: String!): Boolean!
   resetAccountPassword(input: ResetPasswordInput!): AccountType!
+  deleteResetPasswordToken(email: String!): String!
   updateProfile(input: ProfileInput!, id: String!): ProfileType!
+  followUser(follow_id: String!): String!
   login(input: LoginInput!): AccountToken!
+  insertTest(title: String!): String!
+  deleteTest(title: String!): String!
   uploadSong(input: SongInput!): UploadSongType!
   likeSong(song_id: String!): String!
   unlikeSong(song_id: String!): String!
   listenSong(song_id: String!): String!
-  insertTest(title: String!): String!
-  deleteTest(title: String!): String!
 }
 
 input AccountInput {

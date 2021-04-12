@@ -24,7 +24,7 @@ import { Test } from "@nestjs/testing";
     // MongooseModule.forRoot(
     //   "mongodb+srv://vanthi1211:react19001560@cluster0.qe56j.mongodb.net/music?retryWrites=true&w=majority"
     // ),
-    MongooseModule.forRoot("mongodb://mongo:27017/music"),
+    MongooseModule.forRoot("mongodb://localhost:27017/music"),
     MailerModule.forRoot({
       transport: {
         host: "smtp.gmail.com",

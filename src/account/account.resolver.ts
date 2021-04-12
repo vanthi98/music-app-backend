@@ -24,6 +24,11 @@ export class AccountResolver {
     return this.accountService.getAll();
   }
 
+  @Query(() => AccountType)
+  async getAccount(@Args("id") id: string): Promise<AccountType> {
+    return this.accountService.findOne(id);
+  }
+
   @Query(() => String)
   @UseGuards(GqlAuthGuard)
   async getCurrentAccountId(@CtxUser() user): Promise<string> {
@@ -56,5 +61,10 @@ export class AccountResolver {
       input
     );
     return newPasswordAccount;
+  }
+
+  @Mutation(() => String)
+  async deleteResetPasswordToken(@Args("email") email: string): Promise<any> {
+    return this.accountService.deleteResetPasswordToken(email);
   }
 }

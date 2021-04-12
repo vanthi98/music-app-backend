@@ -53,6 +53,19 @@ export class SongService {
     return listSongByAccountName;
   }
 
+  async getUploadedSongByAccount(
+    account_email: string
+  ): Promise<Array<SongType>> {
+    try {
+      const listSongByAccountName = this.songModel.find({
+        uploader: account_email
+      });
+      return listSongByAccountName;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   async ListenSong(song_id): Promise<any> {
     try {
       const increaseListen = await this.songModel
@@ -129,7 +142,7 @@ export class SongService {
           { new: true }
         );
       } else {
-        if (listLikedUser.indexOf(song_id) > -1) {
+        if (listLikedUser.indexOf(profile.id) > -1) {
           throw new Error("This song is exist in your liked list");
         } else {
           await this.songModel.findOneAndUpdate(
@@ -198,7 +211,7 @@ export class SongService {
       if (!listLikedUser || listLikedUser.length === 0) {
         throw new Error("Error occur when unlike song");
       } else {
-        if (listLikedUser.indexOf(song_id) > -1) {
+        if (listLikedUser.indexOf(profile.id) > -1) {
           const temp = listLikedUser;
           temp.splice(listLikedUser.indexOf(song_id), 1);
           await this.songModel.findOneAndUpdate(
@@ -214,6 +227,17 @@ export class SongService {
           );
         }
       }
+      const decreaseLike = await this.songModel
+        .findOneAndUpdate(
+          { _id: song_id },
+          { $inc: { like: -1 } },
+          { new: true }
+        )
+        .exec();
+      if (!decreaseLike) {
+        throw new Error("Have a error when unlike song");
+      }
     }
+    return song.like;
   }
 }

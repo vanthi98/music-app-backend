@@ -1,3 +1,4 @@
+import { SongType } from "./../../song/dto/song.dto";
 import { ObjectType, Field, Int, ID } from "@nestjs/graphql";
 
 @ObjectType()
@@ -20,6 +21,12 @@ export class ProfileType {
   readonly birthday?: string;
   @Field({ nullable: true })
   readonly avatarUrl?: string;
-  @Field(() => [String], { nullable: true })
-  readonly listLikedSong?: string[];
+  @Field({ nullable: true })
+  readonly account_name?: string;
+  @Field(() => [SongType], { nullable: true })
+  readonly listLikedSong?: any[];
+  @Field(() => [SongType], { nullable: true })
+  readonly listFollowings?: any[];
+  @Field(() => [SongType], { nullable: true })
+  readonly listFollowers?: any[];
 }

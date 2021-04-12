@@ -9,7 +9,7 @@ export interface Profile extends Document {
   readonly gender?: boolean;
   readonly birthday?: string;
   readonly avatarUrl?: string;
-  readonly listLikedSong?: Array<string>;
-  readonly listFollowers?: Array<string>;
-  readonly listFollowings?: Array<string>;
+  readonly listLikedSong?: Array<any>;
+  readonly listFollowers?: Array<any>;
+  readonly listFollowings?: Array<any>;
 }
