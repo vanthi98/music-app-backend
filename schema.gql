@@ -10,6 +10,38 @@ type AccountType {
   resetPasswordExpires: Float
 }
 
+type ProfileType {
+  id: ID!
+  account_id: String
+  first_name: String
+  last_name: String
+  email: String
+  age: Float
+  gender: Boolean
+  birthday: String
+  avatarUrl: String
+  account_name: String
+  listLikedSong: [String!]
+  listFollowings: [String!]
+  listFollowers: [String!]
+}
+
+type Account {
+  id: String
+  account_name: String
+  password: String
+}
+
+type AccountToken {
+  access_token: String!
+  account: Account!
+}
+
+type TestType {
+  id: ID!
+  title: String!
+}
+
 type SongType {
   _id: ID!
   song_name: String!
@@ -28,38 +60,6 @@ type SongType {
 
 type UploadSongType {
   id: ID!
-}
-
-type ProfileType {
-  id: ID!
-  account_id: String
-  first_name: String
-  last_name: String
-  email: String
-  age: Float
-  gender: Boolean
-  birthday: String
-  avatarUrl: String
-  account_name: String
-  listLikedSong: [SongType!]
-  listFollowings: [SongType!]
-  listFollowers: [SongType!]
-}
-
-type Account {
-  id: String
-  account_name: String
-  password: String
-}
-
-type AccountToken {
-  access_token: String!
-  account: Account!
-}
-
-type TestType {
-  id: ID!
-  title: String!
 }
 
 type Query {

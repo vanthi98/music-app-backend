@@ -23,10 +23,10 @@ export class ProfileType {
   readonly avatarUrl?: string;
   @Field({ nullable: true })
   readonly account_name?: string;
-  @Field(() => [SongType], { nullable: true })
-  readonly listLikedSong?: any[];
-  @Field(() => [SongType], { nullable: true })
-  readonly listFollowings?: any[];
-  @Field(() => [SongType], { nullable: true })
-  readonly listFollowers?: any[];
+  @Field(() => [String], { nullable: true })
+  readonly listLikedSong?: string[];
+  @Field(() => [String], { nullable: true })
+  readonly listFollowings?: string[];
+  @Field(() => [String], { nullable: true })
+  readonly listFollowers?: string[];
 }

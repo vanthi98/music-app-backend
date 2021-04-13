@@ -7,7 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 exports.__esModule = true;
 exports.ProfileType = void 0;
-var song_dto_1 = require("./../../song/dto/song.dto");
 var graphql_1 = require("@nestjs/graphql");
 var ProfileType = /** @class */ (function () {
     function ProfileType() {
@@ -43,13 +42,13 @@ var ProfileType = /** @class */ (function () {
         graphql_1.Field({ nullable: true })
     ], ProfileType.prototype, "account_name");
     __decorate([
-        graphql_1.Field(function () { return [song_dto_1.SongType]; }, { nullable: true })
+        graphql_1.Field(function () { return [String]; }, { nullable: true })
     ], ProfileType.prototype, "listLikedSong");
     __decorate([
-        graphql_1.Field(function () { return [song_dto_1.SongType]; }, { nullable: true })
+        graphql_1.Field(function () { return [String]; }, { nullable: true })
     ], ProfileType.prototype, "listFollowings");
     __decorate([
-        graphql_1.Field(function () { return [song_dto_1.SongType]; }, { nullable: true })
+        graphql_1.Field(function () { return [String]; }, { nullable: true })
     ], ProfileType.prototype, "listFollowers");
     ProfileType = __decorate([
         graphql_1.ObjectType()
