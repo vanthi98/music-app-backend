@@ -1,4 +1,13 @@
+import { SongType } from "./../../song/dto/song.dto";
 import { ObjectType, Field, Int, ID } from "@nestjs/graphql";
+
+@ObjectType()
+export class HistoryType {
+  @Field(() => String)
+  readonly song_id: string;
+  @Field()
+  readonly order: number;
+}
 
 @ObjectType()
 export class ProfileType {
@@ -20,6 +29,14 @@ export class ProfileType {
   readonly birthday?: string;
   @Field({ nullable: true })
   readonly avatarUrl?: string;
+  @Field({ nullable: true })
+  readonly account_name?: string;
   @Field(() => [String], { nullable: true })
   readonly listLikedSong?: string[];
+  @Field(() => [String], { nullable: true })
+  readonly listFollowings?: string[];
+  @Field(() => [String], { nullable: true })
+  readonly listFollowers?: string[];
+  @Field(() => [HistoryType], { nullable: true })
+  readonly listHistory?: HistoryType[];
 }

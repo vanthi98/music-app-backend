@@ -1,0 +1,148 @@
+Date : 2021-04-06 09:50:11
+Directory : /home/vanthi1211/myworkspace/music-app-backend
+Total : 84 files,  16100 codes, 19 comments, 284 blanks, all 16403 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          6 |     13,320 |          2 |          5 |     13,327 |
+| TypeScript |         58 |      1,341 |          3 |        223 |      1,567 |
+| JavaScript |         14 |        841 |          3 |         14 |        858 |
+| HTML       |          1 |        409 |          6 |          5 |        420 |
+| GraphQL    |          1 |        108 |          3 |         14 |        125 |
+| Markdown   |          1 |         53 |          2 |         21 |         76 |
+| YAML       |          1 |         18 |          0 |          2 |         20 |
+| Docker     |          1 |          8 |          0 |          0 |          8 |
+| Ignore     |          1 |          2 |          0 |          0 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                            | files      | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                               |         84 |     16,100 |         19 |        284 |     16,403 |
+| src                                                                                             |         69 |      2,509 |         12 |        234 |      2,755 |
+| src/account                                                                                     |         10 |        294 |          0 |         54 |        348 |
+| src/account/dto                                                                                 |          1 |         14 |          0 |          1 |         15 |
+| src/account/inputs                                                                              |          2 |         28 |          0 |          3 |         31 |
+| src/account/interfaces                                                                          |          1 |          7 |          0 |          2 |          9 |
+| src/auth                                                                                        |         16 |        238 |          0 |         52 |        290 |
+| src/auth/constants                                                                              |          1 |          3 |          0 |          1 |          4 |
+| src/auth/decorators                                                                             |          1 |          5 |          0 |          2 |          7 |
+| src/auth/dto                                                                                    |          1 |          3 |          0 |          1 |          4 |
+| src/auth/helpers                                                                                |          1 |          9 |          0 |          3 |         12 |
+| src/auth/inputs                                                                                 |          1 |          8 |          0 |          1 |          9 |
+| src/auth/models                                                                                 |          2 |         19 |          0 |          7 |         26 |
+| src/dist                                                                                        |          1 |         69 |          3 |          1 |         73 |
+| src/profile                                                                                     |         13 |        410 |          0 |         35 |        445 |
+| src/profile/dist                                                                                |          2 |        159 |          0 |          2 |        161 |
+| src/profile/dto                                                                                 |          2 |         73 |          0 |          3 |         76 |
+| src/profile/dto/dist                                                                            |          1 |         49 |          0 |          1 |         50 |
+| src/profile/inputs                                                                              |          1 |         22 |          0 |          1 |         23 |
+| src/profile/interfaces                                                                          |          2 |         14 |          0 |          3 |         17 |
+| src/profile/interfaces/dist                                                                     |          1 |          2 |          0 |          1 |          3 |
+| src/song                                                                                        |         15 |        832 |          0 |         42 |        874 |
+| src/song/dist                                                                                   |          4 |        428 |          0 |          4 |        432 |
+| src/song/dto                                                                                    |          2 |        105 |          0 |          4 |        109 |
+| src/song/dto/dist                                                                               |          1 |         70 |          0 |          1 |         71 |
+| src/song/inputs                                                                                 |          1 |         14 |          0 |          1 |         15 |
+| src/song/interfaces                                                                             |          2 |         18 |          0 |          3 |         21 |
+| src/song/interfaces/dist                                                                        |          1 |          2 |          0 |          1 |          3 |
+| src/template                                                                                    |          1 |        409 |          6 |          5 |        420 |
+| src/test                                                                                        |          8 |        123 |          0 |         26 |        149 |
+| src/test/dto                                                                                    |          1 |          8 |          0 |          0 |          8 |
+| src/test/interfaces                                                                             |          1 |          4 |          0 |          1 |          5 |
+| test                                                                                            |          2 |         29 |          0 |          6 |         35 |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                        | language   | code       | comment    | blank      | total      |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /home/vanthi1211/myworkspace/music-app-backend/.dockerignore                                    | Ignore     |          2 |          0 |          0 |          2 |
+| /home/vanthi1211/myworkspace/music-app-backend/.eslintrc.js                                     | JavaScript |         25 |          0 |          1 |         26 |
+| /home/vanthi1211/myworkspace/music-app-backend/.prettierrc.js                                   | JavaScript |          4 |          0 |          1 |          5 |
+| /home/vanthi1211/myworkspace/music-app-backend/Dockerfile                                       | Docker     |          8 |          0 |          0 |          8 |
+| /home/vanthi1211/myworkspace/music-app-backend/README.md                                        | Markdown   |         53 |          2 |         21 |         76 |
+| /home/vanthi1211/myworkspace/music-app-backend/docker-compose.yml                               | YAML       |         18 |          0 |          2 |         20 |
+| /home/vanthi1211/myworkspace/music-app-backend/nest-cli.json                                    | JSON       |          4 |          0 |          1 |          5 |
+| /home/vanthi1211/myworkspace/music-app-backend/package-lock.json                                | JSON       |     13,197 |          0 |          1 |     13,198 |
+| /home/vanthi1211/myworkspace/music-app-backend/package.json                                     | JSON       |         92 |          0 |          1 |         93 |
+| /home/vanthi1211/myworkspace/music-app-backend/schema.gql                                       | GraphQL    |        108 |          3 |         14 |        125 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/account.module.ts                    | TypeScript |         20 |          0 |          2 |         22 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/account.resolver.spec.ts             | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/account.resolver.ts                  | TypeScript |         53 |          0 |          8 |         61 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/account.schema.ts                    | TypeScript |          8 |          0 |          2 |         10 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/account.service.spec.ts              | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/account.service.ts                   | TypeScript |        136 |          0 |         26 |        162 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/dto/create-account.dto.ts            | TypeScript |         14 |          0 |          1 |         15 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/inputs/input-account.input.ts        | TypeScript |         20 |          0 |          1 |         21 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/inputs/input-resetPassword.input.ts  | TypeScript |          8 |          0 |          2 |         10 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/account/interfaces/account.interface.ts      | TypeScript |          7 |          0 |          2 |          9 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/app.controller.spec.ts                       | TypeScript |         18 |          0 |          5 |         23 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/app.controller.ts                            | TypeScript |         14 |          0 |          4 |         18 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/app.module.ts                                | TypeScript |         54 |          3 |          2 |         59 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/app.service.ts                               | TypeScript |         28 |          0 |          4 |         32 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/auth.module.ts                          | TypeScript |         31 |          0 |          2 |         33 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/auth.resolver.spec.ts                   | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/auth.resolver.ts                        | TypeScript |         18 |          0 |          3 |         21 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/auth.service.spec.ts                    | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/auth.service.ts                         | TypeScript |         51 |          0 |         10 |         61 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/constants/jwtKey.ts                     | TypeScript |          3 |          0 |          1 |          4 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/currentUser.ts                          | TypeScript |          8 |          0 |          2 |         10 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/decorators/ctx-account.decorator.ts     | TypeScript |          5 |          0 |          2 |          7 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/dto/jwt.dto.ts                          | TypeScript |          3 |          0 |          1 |          4 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/graphqlAuth.ts                          | TypeScript |         21 |          0 |          4 |         25 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/helpers/auth.helpers.ts                 | TypeScript |          9 |          0 |          3 |         12 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/inputs/input-login.input.ts             | TypeScript |          8 |          0 |          1 |          9 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/jwt.strategy.ts                         | TypeScript |         17 |          0 |          3 |         20 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/local.strategy.ts                       | TypeScript |         17 |          0 |          3 |         20 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/models/account-token.ts                 | TypeScript |          9 |          0 |          3 |         12 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/auth/models/account.ts                       | TypeScript |         10 |          0 |          4 |         14 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/dist/app.module.js                           | JavaScript |         69 |          3 |          1 |         73 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/main.ts                                      | TypeScript |         20 |          0 |          4 |         24 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/dist/profile.schema.js               | JavaScript |         16 |          0 |          1 |         17 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/dist/profile.service.js              | JavaScript |        143 |          0 |          1 |        144 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/dto/create-profile.dto.ts            | TypeScript |         24 |          0 |          2 |         26 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/dto/dist/create-profile.dto.js       | JavaScript |         49 |          0 |          1 |         50 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/inputs/input-profile.input.ts        | TypeScript |         22 |          0 |          1 |         23 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/interfaces/dist/profile.interface.js | JavaScript |          2 |          0 |          1 |          3 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/interfaces/profile.interface.ts      | TypeScript |         12 |          0 |          2 |         14 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/profile.module.ts                    | TypeScript |         18 |          0 |          2 |         20 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/profile.resolver.spec.ts             | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/profile.resolver.ts                  | TypeScript |         26 |          0 |          5 |         31 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/profile.schema.ts                    | TypeScript |         13 |          0 |          2 |         15 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/profile.service.spec.ts              | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/profile/profile.service.ts                   | TypeScript |         57 |          0 |          7 |         64 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/dist/song.module.js                     | JavaScript |         38 |          0 |          1 |         39 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/dist/song.resolver.js                   | JavaScript |        122 |          0 |          1 |        123 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/dist/song.schema.js                     | JavaScript |         20 |          0 |          1 |         21 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/dist/song.service.js                    | JavaScript |        248 |          0 |          1 |        249 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/dto/dist/song.dto.js                    | JavaScript |         70 |          0 |          1 |         71 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/dto/song.dto.ts                         | TypeScript |         35 |          0 |          3 |         38 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/inputs/input-upload-song.input.ts       | TypeScript |         14 |          0 |          1 |         15 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/interfaces/dist/song.interface.js       | JavaScript |          2 |          0 |          1 |          3 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/interfaces/song.interface.ts            | TypeScript |         16 |          0 |          2 |         18 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/song.module.ts                          | TypeScript |         22 |          0 |          2 |         24 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/song.resolver.spec.ts                   | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/song.resolver.ts                        | TypeScript |         42 |          0 |          5 |         47 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/song.schema.ts                          | TypeScript |         17 |          0 |          2 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/song.service.spec.ts                    | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/song/song.service.ts                         | TypeScript |        158 |          0 |         11 |        169 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/template/index.ejs                           | HTML       |        409 |          6 |          5 |        420 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/test/dto/test.dto.ts                         | TypeScript |          8 |          0 |          0 |          8 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/test/interfaces/test.interface.ts            | TypeScript |          4 |          0 |          1 |          5 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/test/test.module.ts                          | TypeScript |         13 |          0 |          2 |         15 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/test/test.resolver.spec.ts                   | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/test/test.resolver.ts                        | TypeScript |         23 |          0 |          6 |         29 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/test/test.schema.ts                          | TypeScript |          5 |          0 |          2 |          7 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/test/test.service.spec.ts                    | TypeScript |         14 |          0 |          5 |         19 |
+| /home/vanthi1211/myworkspace/music-app-backend/src/test/test.service.ts                         | TypeScript |         42 |          0 |          5 |         47 |
+| /home/vanthi1211/myworkspace/music-app-backend/test/app.e2e-spec.ts                             | TypeScript |         20 |          0 |          5 |         25 |
+| /home/vanthi1211/myworkspace/music-app-backend/test/jest-e2e.json                               | JSON       |          9 |          0 |          1 |         10 |
+| /home/vanthi1211/myworkspace/music-app-backend/tsconfig.build.json                              | JSON       |          3 |          2 |          0 |          5 |
+| /home/vanthi1211/myworkspace/music-app-backend/tsconfig.json                                    | JSON       |         15 |          0 |          1 |         16 |
+| /home/vanthi1211/myworkspace/music-app-backend/webpack.config.js                                | JavaScript |         33 |          0 |          1 |         34 |
+| Total                                                                                           |            |     16,100 |         19 |        284 |     16,403 |
++-------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

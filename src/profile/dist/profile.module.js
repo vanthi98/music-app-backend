@@ -6,33 +6,32 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.SongModule = void 0;
+exports.ProfileModule = void 0;
 var common_1 = require("@nestjs/common");
 var mongoose_1 = require("@nestjs/mongoose");
-var song_resolver_1 = require("./song.resolver");
-var song_schema_1 = require("./song.schema");
-var song_service_1 = require("./song.service");
+var profile_resolver_1 = require("./profile.resolver");
+var profile_schema_1 = require("./profile.schema");
+var profile_service_1 = require("./profile.service");
 var jwt_1 = require("@nestjs/jwt");
-var profile_module_1 = require("../profile/profile.module");
 var account_module_1 = require("../account/account.module");
-var SongModule = /** @class */ (function () {
-    function SongModule() {
+var common_2 = require("@nestjs/common");
+var ProfileModule = /** @class */ (function () {
+    function ProfileModule() {
     }
-    SongModule = __decorate([
+    ProfileModule = __decorate([
         common_1.Module({
             imports: [
-                profile_module_1.ProfileModule,
-                account_module_1.AccountModule,
-                mongoose_1.MongooseModule.forFeature([{ name: "Song", schema: song_schema_1.SongSchema }]),
+                common_2.forwardRef(function () { return account_module_1.AccountModule; }),
+                mongoose_1.MongooseModule.forFeature([{ name: "Profile", schema: profile_schema_1.ProfileSchema }]),
                 jwt_1.JwtModule.register({
                     secret: "secretKey",
                     signOptions: { expiresIn: "9000s" }
                 })
             ],
-            providers: [song_resolver_1.SongResolver, song_service_1.SongService],
-            exports: [song_service_1.SongService]
+            providers: [profile_resolver_1.ProfileResolver, profile_service_1.ProfileService],
+            exports: [profile_service_1.ProfileService]
         })
-    ], SongModule);
-    return SongModule;
+    ], ProfileModule);
+    return ProfileModule;
 }());
-exports.SongModule = SongModule;
+exports.ProfileModule = ProfileModule;

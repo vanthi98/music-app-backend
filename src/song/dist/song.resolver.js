@@ -62,10 +62,10 @@ var SongResolver = /** @class */ (function () {
             });
         });
     };
-    SongResolver.prototype.getAllSong = function () {
+    SongResolver.prototype.getAllSong = function (keyword) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.songService.getAllSong()];
+                return [2 /*return*/, this.songService.getAllSong(keyword)];
             });
         });
     };
@@ -76,6 +76,56 @@ var SongResolver = /** @class */ (function () {
             });
         });
     };
+    SongResolver.prototype.getSongByAccount = function (account_email) {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.songService.getUploadedSongByAccount(account_email)];
+            });
+        });
+    };
+    SongResolver.prototype.getLikedSongByCurrentAccount = function (user) {
+        return __awaiter(this, void 0, Promise, function () {
+            var email, listSong;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        email = user.payload.accountId;
+                        return [4 /*yield*/, this.songService.getLikedSong(email)];
+                    case 1:
+                        listSong = _a.sent();
+                        return [2 /*return*/, listSong];
+                }
+            });
+        });
+    };
+    SongResolver.prototype.getHistoryByCurrentAccount = function (user) {
+        return __awaiter(this, void 0, Promise, function () {
+            var email, listSong;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        email = user.payload.accountId;
+                        return [4 /*yield*/, this.songService.getHistory(email)];
+                    case 1:
+                        listSong = _a.sent();
+                        return [2 /*return*/, listSong];
+                }
+            });
+        });
+    };
+    SongResolver.prototype.getLikedSongByEmail = function (account_email) {
+        return __awaiter(this, void 0, Promise, function () {
+            var listSong;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.songService.getLikedSong(account_email)];
+                    case 1:
+                        listSong = _a.sent();
+                        return [2 /*return*/, listSong];
+                }
+            });
+        });
+    };
     SongResolver.prototype.likeSong = function (currentUser, song_id) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
@@ -83,10 +133,28 @@ var SongResolver = /** @class */ (function () {
             });
         });
     };
-    SongResolver.prototype.listenSong = function (song_id) {
+    SongResolver.prototype.unlikeSong = function (currentUser, song_id) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.songService.ListenSong(song_id)];
+                return [2 /*return*/, this.songService.unlikeSong(song_id, currentUser)];
+            });
+        });
+    };
+    SongResolver.prototype.listenSong = function (currentUser, song_id) {
+        return __awaiter(this, void 0, Promise, function () {
+            var email;
+            return __generator(this, function (_a) {
+                email = currentUser.payload.accountId;
+                return [2 /*return*/, this.songService.ListenSong(email, song_id)];
+            });
+        });
+    };
+    SongResolver.prototype.updateSong = function (currentUser, song_id, input) {
+        return __awaiter(this, void 0, Promise, function () {
+            var email;
+            return __generator(this, function (_a) {
+                email = currentUser.payload.accountId;
+                return [2 /*return*/, this.songService.updateSong(email, song_id, input)];
             });
         });
     };
@@ -97,13 +165,32 @@ var SongResolver = /** @class */ (function () {
         __param(1, graphql_1.Args("input"))
     ], SongResolver.prototype, "uploadSong");
     __decorate([
-        graphql_1.Query(function () { return [song_dto_1.SongType]; })
+        graphql_1.Query(function () { return [song_dto_1.SongType]; }),
+        __param(0, graphql_1.Args("keyword", { nullable: true, type: function () { return String; } }))
     ], SongResolver.prototype, "getAllSong");
     __decorate([
         graphql_1.Query(function () { return [song_dto_1.SongType]; }),
         common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
         __param(0, ctx_account_decorator_1.CtxUser())
     ], SongResolver.prototype, "getSongByCurrentAccount");
+    __decorate([
+        graphql_1.Query(function () { return [song_dto_1.SongType]; }),
+        __param(0, graphql_1.Args("account_email"))
+    ], SongResolver.prototype, "getSongByAccount");
+    __decorate([
+        graphql_1.Query(function () { return [song_dto_1.SongType]; }),
+        common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
+        __param(0, ctx_account_decorator_1.CtxUser())
+    ], SongResolver.prototype, "getLikedSongByCurrentAccount");
+    __decorate([
+        graphql_1.Query(function () { return [song_dto_1.SongType]; }),
+        common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
+        __param(0, ctx_account_decorator_1.CtxUser())
+    ], SongResolver.prototype, "getHistoryByCurrentAccount");
+    __decorate([
+        graphql_1.Query(function () { return [song_dto_1.SongType]; }),
+        __param(0, graphql_1.Args("account_email"))
+    ], SongResolver.prototype, "getLikedSongByEmail");
     __decorate([
         graphql_1.Mutation(function () { return String; }),
         common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
@@ -112,8 +199,23 @@ var SongResolver = /** @class */ (function () {
     ], SongResolver.prototype, "likeSong");
     __decorate([
         graphql_1.Mutation(function () { return String; }),
-        __param(0, graphql_1.Args("song_id"))
+        common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
+        __param(0, ctx_account_decorator_1.CtxUser()),
+        __param(1, graphql_1.Args("song_id"))
+    ], SongResolver.prototype, "unlikeSong");
+    __decorate([
+        graphql_1.Mutation(function () { return String; }),
+        common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
+        __param(0, ctx_account_decorator_1.CtxUser()),
+        __param(1, graphql_1.Args("song_id"))
     ], SongResolver.prototype, "listenSong");
+    __decorate([
+        graphql_1.Mutation(function () { return song_dto_1.SongType; }),
+        common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
+        __param(0, ctx_account_decorator_1.CtxUser()),
+        __param(1, graphql_1.Args("song_id")),
+        __param(2, graphql_1.Args("input"))
+    ], SongResolver.prototype, "updateSong");
     SongResolver = __decorate([
         graphql_1.Resolver()
     ], SongResolver);

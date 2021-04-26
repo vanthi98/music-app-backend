@@ -21,13 +21,13 @@ var SongType = /** @class */ (function () {
         graphql_1.Field()
     ], SongType.prototype, "song_url");
     __decorate([
-        graphql_1.Field()
+        graphql_1.Field({ nullable: true })
     ], SongType.prototype, "song_image_url");
     __decorate([
-        graphql_1.Field()
+        graphql_1.Field({ nullable: true })
     ], SongType.prototype, "lyric");
     __decorate([
-        graphql_1.Field()
+        graphql_1.Field({ nullable: true })
     ], SongType.prototype, "author");
     __decorate([
         graphql_1.Field()

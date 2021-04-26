@@ -1,4 +1,9 @@
-import { Injectable, BadRequestException } from "@nestjs/common";
+import {
+  Injectable,
+  BadRequestException,
+  Inject,
+  forwardRef
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { AccountType } from "./dto/create-account.dto";
@@ -29,6 +34,7 @@ console.log(makeid(5));
 export class AccountService {
   constructor(
     @InjectModel("Account") private accountModel: Model<Account>,
+    @Inject(forwardRef(() => ProfileService))
     private readonly profileService: ProfileService,
     private readonly mailerService: MailerService
   ) {}
@@ -157,5 +163,21 @@ export class AccountService {
     );
 
     if (result) return result;
+  }
+
+  async deleteResetPasswordToken(email: string): Promise<any> {
+    try {
+      const deleteToken = await this.accountModel.findOneAndUpdate(
+        { email },
+        {
+          resetPasswordToken: undefined,
+          resetPasswordExpires: undefined
+        },
+        { upsert: true, new: true }
+      );
+      return deleteToken.email;
+    } catch (error) {
+      return Promise.reject("Error occur when delete token");
+    }
   }
 }

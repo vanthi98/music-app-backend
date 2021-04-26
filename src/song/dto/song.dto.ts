@@ -8,11 +8,11 @@ export class SongType {
   readonly song_name: string;
   @Field()
   readonly song_url: string;
-  @Field()
+  @Field({ nullable: true })
   readonly song_image_url?: string;
-  @Field()
+  @Field({ nullable: true })
   readonly lyric?: string;
-  @Field()
+  @Field({ nullable: true })
   readonly author?: string;
   @Field()
   readonly like: number;
