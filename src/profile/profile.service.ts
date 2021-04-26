@@ -44,7 +44,6 @@ export class ProfileService {
   }
 
   async update(profileDto: Profile, profileId: string): Promise<ProfileType> {
-    console.log(profileDto);
     const updateProfile = await this.profileModel.findByIdAndUpdate(
       profileId,
       profileDto,
@@ -80,7 +79,6 @@ export class ProfileService {
       const result = await this.profileModel
         .findOne({ account_id: user.id })
         .populate("songs");
-      console.log(result);
       return result;
     }
   }
@@ -176,5 +174,61 @@ export class ProfileService {
     return follow_id;
   }
 
-  // async unFollow(user_id: string, follower_id: string): Promise<string> {}
+  async unFollow(currentUser: any, follow_id: string): Promise<string> {
+    const followUser = await this.getProfileById(follow_id);
+    if (!followUser) {
+      return Promise.reject("Cant find user to unfollow");
+    }
+    if (follow_id === currentUser.payload.accountId) {
+      return Promise.reject("Cant unfollow yourself");
+    } else {
+      const user = await this.accountService.findByEmail(
+        currentUser.payload.accountId
+      );
+      if (!user) {
+        return Promise.reject("Cant find user");
+      }
+      const account_id = user.id;
+      const profile = await this.getProfileByAccountId(account_id);
+      const { listFollowings } = profile;
+      console.log(listFollowings, follow_id);
+      if (!listFollowings || listFollowings.length === 0) {
+        throw new Error("Error occur when unfollow user");
+      } else {
+        if (listFollowings.indexOf(follow_id) > -1) {
+          const temp = listFollowings;
+          temp.splice(listFollowings.indexOf(follow_id), 1);
+          console.log(temp, profile.id);
+          await this.update(
+            {
+              listFollowings: temp
+            },
+            profile.id
+          );
+        } else {
+          return Promise.reject(
+            "This user is not exist in your followings list"
+          );
+        }
+      }
+      const { listFollowers } = followUser;
+      if (!listFollowers || listFollowers.length === 0) {
+        throw new Error("Error occur when unfollow user");
+      } else {
+        if (listFollowers.indexOf(profile.id) > -1) {
+          const temp = listFollowers;
+          temp.splice(listFollowers.indexOf(profile.id), 1);
+          await this.update(
+            {
+              listFollowers: temp
+            },
+            follow_id
+          );
+        } else {
+          return Promise.reject("You is not exist in this user followers list");
+        }
+      }
+    }
+    return follow_id;
+  }
 }

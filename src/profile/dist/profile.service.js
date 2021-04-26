@@ -101,11 +101,9 @@ var ProfileService = /** @class */ (function () {
             var updateProfile;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log(profileDto);
-                        return [4 /*yield*/, this.profileModel.findByIdAndUpdate(profileId, profileDto, {
-                                "new": true
-                            })];
+                    case 0: return [4 /*yield*/, this.profileModel.findByIdAndUpdate(profileId, profileDto, {
+                            "new": true
+                        })];
                     case 1:
                         updateProfile = _a.sent();
                         return [4 /*yield*/, updateProfile];
@@ -165,7 +163,6 @@ var ProfileService = /** @class */ (function () {
                             .populate("songs")];
                     case 3:
                         result = _a.sent();
-                        console.log(result);
                         return [2 /*return*/, result];
                 }
             });
@@ -265,6 +262,65 @@ var ProfileService = /** @class */ (function () {
                         _a.sent();
                         _a.label = 14;
                     case 14: return [2 /*return*/, follow_id];
+                }
+            });
+        });
+    };
+    ProfileService.prototype.unFollow = function (currentUser, follow_id) {
+        return __awaiter(this, void 0, Promise, function () {
+            var followUser, user, account_id, profile, listFollowings, temp, listFollowers, temp;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getProfileById(follow_id)];
+                    case 1:
+                        followUser = _a.sent();
+                        if (!followUser) {
+                            return [2 /*return*/, Promise.reject("Cant find user to unfollow")];
+                        }
+                        if (!(follow_id === currentUser.payload.accountId)) return [3 /*break*/, 2];
+                        return [2 /*return*/, Promise.reject("Cant unfollow yourself")];
+                    case 2: return [4 /*yield*/, this.accountService.findByEmail(currentUser.payload.accountId)];
+                    case 3:
+                        user = _a.sent();
+                        if (!user) {
+                            return [2 /*return*/, Promise.reject("Cant find user")];
+                        }
+                        account_id = user.id;
+                        return [4 /*yield*/, this.getProfileByAccountId(account_id)];
+                    case 4:
+                        profile = _a.sent();
+                        listFollowings = profile.listFollowings;
+                        console.log(listFollowings, follow_id);
+                        if (!(!listFollowings || listFollowings.length === 0)) return [3 /*break*/, 5];
+                        throw new Error("Error occur when unfollow user");
+                    case 5:
+                        if (!(listFollowings.indexOf(follow_id) > -1)) return [3 /*break*/, 7];
+                        temp = listFollowings;
+                        temp.splice(listFollowings.indexOf(follow_id), 1);
+                        console.log(temp, profile.id);
+                        return [4 /*yield*/, this.update({
+                                listFollowings: temp
+                            }, profile.id)];
+                    case 6:
+                        _a.sent();
+                        return [3 /*break*/, 8];
+                    case 7: return [2 /*return*/, Promise.reject("This user is not exist in your followings list")];
+                    case 8:
+                        listFollowers = followUser.listFollowers;
+                        if (!(!listFollowers || listFollowers.length === 0)) return [3 /*break*/, 9];
+                        throw new Error("Error occur when unfollow user");
+                    case 9:
+                        if (!(listFollowers.indexOf(profile.id) > -1)) return [3 /*break*/, 11];
+                        temp = listFollowers;
+                        temp.splice(listFollowers.indexOf(profile.id), 1);
+                        return [4 /*yield*/, this.update({
+                                listFollowers: temp
+                            }, follow_id)];
+                    case 10:
+                        _a.sent();
+                        return [3 /*break*/, 12];
+                    case 11: return [2 /*return*/, Promise.reject("You is not exist in this user followers list")];
+                    case 12: return [2 /*return*/, follow_id];
                 }
             });
         });

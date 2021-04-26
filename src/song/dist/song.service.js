@@ -87,13 +87,22 @@ var SongService = /** @class */ (function () {
             });
         });
     };
-    SongService.prototype.getAllSong = function () {
+    SongService.prototype.getAllSong = function (keyword) {
         return __awaiter(this, void 0, Promise, function () {
-            var listSong;
+            var regex, listSong, listSong;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.songModel.find({})];
+                    case 0:
+                        if (!keyword) return [3 /*break*/, 2];
+                        regex = /()()/;
+                        return [4 /*yield*/, this.songModel.find({
+                                song_name: { $regex: new RegExp(keyword, "i") }
+                            })];
                     case 1:
+                        listSong = _a.sent();
+                        return [2 /*return*/, listSong];
+                    case 2: return [4 /*yield*/, this.songModel.find({})];
+                    case 3:
                         listSong = _a.sent();
                         return [2 /*return*/, listSong];
                 }
@@ -105,11 +114,25 @@ var SongService = /** @class */ (function () {
             var updateSong;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        console.log(songDto);
-                        return [4 /*yield*/, this.songModel.findByIdAndUpdate(songId, songDto, {
-                                "new": true
-                            })];
+                    case 0: return [4 /*yield*/, this.songModel.findByIdAndUpdate(songId, songDto, {
+                            "new": true
+                        })];
+                    case 1:
+                        updateSong = _a.sent();
+                        return [4 /*yield*/, updateSong];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    SongService.prototype.updateSong = function (email, songId, songDto) {
+        return __awaiter(this, void 0, Promise, function () {
+            var updateSong;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.songModel.findByIdAndUpdate(songId, songDto, {
+                            "new": true
+                        })];
                     case 1:
                         updateSong = _a.sent();
                         return [4 /*yield*/, updateSong];
@@ -147,23 +170,73 @@ var SongService = /** @class */ (function () {
             });
         });
     };
-    SongService.prototype.ListenSong = function (song_id) {
+    SongService.prototype.ListenSong = function (email, song_id) {
         return __awaiter(this, void 0, Promise, function () {
-            var increaseListen, error_1;
+            var profile, listHistory, isInHistory, maxOrder, temp, increaseListen, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.songModel
-                                .findOneAndUpdate({ _id: song_id }, { $inc: { listen: 1 } }, { "new": true })
-                                .exec()];
+                        _a.trys.push([0, 10, , 11]);
+                        return [4 /*yield*/, this.profileService.getProfileByEmailWithLikedSong(email)];
                     case 1:
-                        increaseListen = _a.sent();
-                        return [2 /*return*/, increaseListen.listen];
+                        profile = _a.sent();
+                        listHistory = profile.listHistory;
+                        if (!(!listHistory || listHistory.length === 0)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, this.profileService.update({
+                                listHistory: __spreadArrays(listHistory, [
+                                    { song_id: new mongoose.mongo.ObjectId(song_id), order: 1 }
+                                ])
+                            }, profile.id)];
                     case 2:
+                        _a.sent();
+                        return [3 /*break*/, 8];
+                    case 3:
+                        isInHistory = listHistory.filter(function (song) {
+                            return song.song_id.toString() === song_id;
+                        }).length > 0;
+                        maxOrder = Math.max.apply(Math, listHistory.map(function (song) {
+                            return song.order;
+                        }));
+                        if (!isInHistory) return [3 /*break*/, 6];
+                        temp = listHistory.filter(function (song) { return song.song_id.toString() !== song_id; });
+                        return [4 /*yield*/, this.profileService.update({
+                                listHistory: temp
+                            }, profile.id)];
+                    case 4:
+                        _a.sent();
+                        return [4 /*yield*/, this.profileService.update({
+                                listHistory: __spreadArrays(temp, [
+                                    {
+                                        song_id: new mongoose.mongo.ObjectId(song_id),
+                                        order: maxOrder + 1
+                                    }
+                                ])
+                            }, profile.id)];
+                    case 5:
+                        _a.sent();
+                        return [3 /*break*/, 8];
+                    case 6: return [4 /*yield*/, this.profileService.update({
+                            listHistory: __spreadArrays(listHistory, [
+                                {
+                                    song_id: new mongoose.mongo.ObjectId(song_id),
+                                    order: maxOrder + 1
+                                }
+                            ])
+                        }, profile.id)];
+                    case 7:
+                        _a.sent();
+                        _a.label = 8;
+                    case 8: return [4 /*yield*/, this.songModel
+                            .findByIdAndUpdate(song_id, { $inc: { listen: 1 } }, { "new": true })
+                            .exec()];
+                    case 9:
+                        increaseListen = _a.sent();
+                        console.log(increaseListen);
+                        return [2 /*return*/, increaseListen.listen];
+                    case 10:
                         error_1 = _a.sent();
-                        throw new Error("Cant not listen song");
-                    case 3: return [2 /*return*/];
+                        throw new Error("Cant not listen song" + error_1);
+                    case 11: return [2 /*return*/];
                 }
             });
         });
@@ -312,6 +385,69 @@ var SongService = /** @class */ (function () {
                         }
                         _a.label = 14;
                     case 14: return [2 /*return*/, song.like];
+                }
+            });
+        });
+    };
+    SongService.prototype.getLikedSong = function (email) {
+        return __awaiter(this, void 0, Promise, function () {
+            var profile, listLikedSong, length, listSong, i, song;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.profileService.getProfileByEmailWithLikedSong(email)];
+                    case 1:
+                        profile = _a.sent();
+                        listLikedSong = profile.listLikedSong;
+                        length = listLikedSong.length;
+                        listSong = [];
+                        i = 0;
+                        _a.label = 2;
+                    case 2:
+                        if (!(i < length)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, this.songModel.findById(listLikedSong[i]).exec()];
+                    case 3:
+                        song = _a.sent();
+                        listSong.push(song);
+                        _a.label = 4;
+                    case 4:
+                        i++;
+                        return [3 /*break*/, 2];
+                    case 5: return [2 /*return*/, listSong];
+                }
+            });
+        });
+    };
+    SongService.prototype.getHistory = function (email) {
+        return __awaiter(this, void 0, Promise, function () {
+            var profile, listHistory, length, listSong, i, song;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.profileService.getProfileByEmailWithLikedSong(email)];
+                    case 1:
+                        profile = _a.sent();
+                        listHistory = profile.listHistory;
+                        listHistory.sort(function (a, b) {
+                            if (a.order < b.order)
+                                return 1;
+                            if (a.order > b.order)
+                                return -1;
+                            return 0;
+                        });
+                        length = listHistory.length;
+                        listSong = [];
+                        i = 0;
+                        _a.label = 2;
+                    case 2:
+                        if (!(i < length)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, this.songModel.findById(listHistory[i].song_id).exec()];
+                    case 3:
+                        song = _a.sent();
+                        listSong.push(song);
+                        _a.label = 4;
+                    case 4:
+                        i++;
+                        return [3 /*break*/, 2];
+                    case 5: return [2 /*return*/, listSong];
                 }
             });
         });

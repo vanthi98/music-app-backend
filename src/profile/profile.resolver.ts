@@ -45,14 +45,13 @@ export class ProfileResolver {
     return this.profileService.follow(currentUser, follow_id);
   }
 
-  @Query(() => ProfileType)
+  @Mutation(() => String)
   @UseGuards(GqlAuthGuard)
-  async getCurrentAccountIdAndSong(@CtxUser() user): Promise<ProfileType> {
-    const email = user.payload.accountId;
-    const account = await this.profileService.getProfileByEmailWithLikedSong(
-      email
-    );
-    return account;
+  async unFollowUser(
+    @CtxUser() currentUser,
+    @Args("follow_id") follow_id: string
+  ): Promise<string> {
+    return this.profileService.unFollow(currentUser, follow_id);
   }
 
   @Query(() => String)

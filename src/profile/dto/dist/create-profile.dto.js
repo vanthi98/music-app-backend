@@ -6,8 +6,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.ProfileType = void 0;
+exports.ProfileType = exports.HistoryType = void 0;
 var graphql_1 = require("@nestjs/graphql");
+var HistoryType = /** @class */ (function () {
+    function HistoryType() {
+    }
+    __decorate([
+        graphql_1.Field(function () { return String; })
+    ], HistoryType.prototype, "song_id");
+    __decorate([
+        graphql_1.Field()
+    ], HistoryType.prototype, "order");
+    HistoryType = __decorate([
+        graphql_1.ObjectType()
+    ], HistoryType);
+    return HistoryType;
+}());
+exports.HistoryType = HistoryType;
 var ProfileType = /** @class */ (function () {
     function ProfileType() {
     }
@@ -50,6 +65,9 @@ var ProfileType = /** @class */ (function () {
     __decorate([
         graphql_1.Field(function () { return [String]; }, { nullable: true })
     ], ProfileType.prototype, "listFollowers");
+    __decorate([
+        graphql_1.Field(function () { return [HistoryType]; }, { nullable: true })
+    ], ProfileType.prototype, "listHistory");
     ProfileType = __decorate([
         graphql_1.ObjectType()
     ], ProfileType);

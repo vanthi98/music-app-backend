@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { SongService } from "./song.service";
 import { UploadSongType, SongType } from "./dto/song.dto";
-import { SongInput } from "./inputs/input-upload-song.input";
+import { SongInput, SongUpdateInput } from "./inputs/input-upload-song.input";
 import { UseGuards } from "@nestjs/common";
 import { GqlAuthGuard } from "../auth/graphqlAuth";
 import { CtxUser } from "../auth/decorators/ctx-account.decorator";
@@ -19,8 +19,10 @@ export class SongResolver {
   }
 
   @Query(() => [SongType])
-  async getAllSong(): Promise<Array<SongType>> {
-    return this.songService.getAllSong();
+  async getAllSong(
+    @Args("keyword", { nullable: true, type: () => String }) keyword: string
+  ): Promise<Array<SongType>> {
+    return this.songService.getAllSong(keyword);
   }
 
   @Query(() => [SongType])
@@ -36,6 +38,32 @@ export class SongResolver {
     @Args("account_email") account_email: string
   ): Promise<Array<SongType>> {
     return this.songService.getUploadedSongByAccount(account_email);
+  }
+
+  @Query(() => [SongType])
+  @UseGuards(GqlAuthGuard)
+  async getLikedSongByCurrentAccount(
+    @CtxUser() user
+  ): Promise<Array<SongType>> {
+    const email = user.payload.accountId;
+    const listSong = await this.songService.getLikedSong(email);
+    return listSong;
+  }
+
+  @Query(() => [SongType])
+  @UseGuards(GqlAuthGuard)
+  async getHistoryByCurrentAccount(@CtxUser() user): Promise<Array<SongType>> {
+    const email = user.payload.accountId;
+    const listSong = await this.songService.getHistory(email);
+    return listSong;
+  }
+
+  @Query(() => [SongType])
+  async getLikedSongByEmail(
+    @Args("account_email") account_email: string
+  ): Promise<Array<SongType>> {
+    const listSong = await this.songService.getLikedSong(account_email);
+    return listSong;
   }
 
   @Mutation(() => String)
@@ -57,7 +85,23 @@ export class SongResolver {
   }
 
   @Mutation(() => String)
-  async listenSong(@Args("song_id") song_id: string): Promise<any> {
-    return this.songService.ListenSong(song_id);
+  @UseGuards(GqlAuthGuard)
+  async listenSong(
+    @CtxUser() currentUser,
+    @Args("song_id") song_id: string
+  ): Promise<any> {
+    const email = currentUser.payload.accountId;
+    return this.songService.ListenSong(email, song_id);
+  }
+
+  @Mutation(() => SongType)
+  @UseGuards(GqlAuthGuard)
+  async updateSong(
+    @CtxUser() currentUser,
+    @Args("song_id") song_id: string,
+    @Args("input") input: SongUpdateInput
+  ): Promise<SongType> {
+    const email = currentUser.payload.accountId;
+    return this.songService.updateSong(email, song_id, input);
   }
 }

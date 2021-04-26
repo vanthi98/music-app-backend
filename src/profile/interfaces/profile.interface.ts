@@ -12,4 +12,5 @@ export interface Profile extends Document {
   readonly listLikedSong?: Array<any>;
   readonly listFollowers?: Array<any>;
   readonly listFollowings?: Array<any>;
+  readonly listHistory?: Array<any>;
 }

@@ -10,6 +10,11 @@ type AccountType {
   resetPasswordExpires: Float
 }
 
+type HistoryType {
+  song_id: String!
+  order: Float!
+}
+
 type ProfileType {
   id: ID!
   account_id: String
@@ -24,6 +29,7 @@ type ProfileType {
   listLikedSong: [String!]
   listFollowings: [String!]
   listFollowers: [String!]
+  listHistory: [HistoryType!]
 }
 
 type Account {
@@ -46,9 +52,9 @@ type SongType {
   _id: ID!
   song_name: String!
   song_url: String!
-  song_image_url: String!
-  lyric: String!
-  author: String!
+  song_image_url: String
+  lyric: String
+  author: String
   like: Float!
   comment: Float!
   listen: Float!
@@ -69,13 +75,15 @@ type Query {
   getProfile(id: String!): ProfileType!
   getProfileByAccountId(account_id: String!): ProfileType!
   getProfileByEmail(email: String!): ProfileType!
-  getCurrentAccountIdAndSong: ProfileType!
   checkFollow(follow_id: String!): String!
   getAllTest: [TestType!]!
   getOneTest(title: String!): TestType!
-  getAllSong: [SongType!]!
+  getAllSong(keyword: String): [SongType!]!
   getSongByCurrentAccount: [SongType!]!
   getSongByAccount(account_email: String!): [SongType!]!
+  getLikedSongByCurrentAccount: [SongType!]!
+  getHistoryByCurrentAccount: [SongType!]!
+  getLikedSongByEmail(account_email: String!): [SongType!]!
 }
 
 type Mutation {
@@ -86,6 +94,7 @@ type Mutation {
   deleteResetPasswordToken(email: String!): String!
   updateProfile(input: ProfileInput!, id: String!): ProfileType!
   followUser(follow_id: String!): String!
+  unFollowUser(follow_id: String!): String!
   login(input: LoginInput!): AccountToken!
   insertTest(title: String!): String!
   deleteTest(title: String!): String!
@@ -93,6 +102,7 @@ type Mutation {
   likeSong(song_id: String!): String!
   unlikeSong(song_id: String!): String!
   listenSong(song_id: String!): String!
+  updateSong(input: SongUpdateInput!, song_id: String!): SongType!
 }
 
 input AccountInput {
@@ -131,6 +141,14 @@ input LoginInput {
 input SongInput {
   song_name: String!
   song_url: String!
+  song_image_url: String
+  lyric: String
+  author: String
+}
+
+input SongUpdateInput {
+  song_name: String
+  song_url: String
   song_image_url: String
   lyric: String
   author: String

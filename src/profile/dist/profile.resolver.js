@@ -90,18 +90,10 @@ var ProfileResolver = /** @class */ (function () {
             });
         });
     };
-    ProfileResolver.prototype.getCurrentAccountIdAndSong = function (user) {
+    ProfileResolver.prototype.unFollowUser = function (currentUser, follow_id) {
         return __awaiter(this, void 0, Promise, function () {
-            var email, account;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        email = user.payload.accountId;
-                        return [4 /*yield*/, this.profileService.getProfileByEmailWithLikedSong(email)];
-                    case 1:
-                        account = _a.sent();
-                        return [2 /*return*/, account];
-                }
+                return [2 /*return*/, this.profileService.unFollow(currentUser, follow_id)];
             });
         });
     };
@@ -136,10 +128,11 @@ var ProfileResolver = /** @class */ (function () {
         __param(1, graphql_1.Args("follow_id"))
     ], ProfileResolver.prototype, "followUser");
     __decorate([
-        graphql_1.Query(function () { return create_profile_dto_1.ProfileType; }),
+        graphql_1.Mutation(function () { return String; }),
         common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
-        __param(0, ctx_account_decorator_1.CtxUser())
-    ], ProfileResolver.prototype, "getCurrentAccountIdAndSong");
+        __param(0, ctx_account_decorator_1.CtxUser()),
+        __param(1, graphql_1.Args("follow_id"))
+    ], ProfileResolver.prototype, "unFollowUser");
     __decorate([
         graphql_1.Query(function () { return String; }),
         common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),
