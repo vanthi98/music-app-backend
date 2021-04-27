@@ -14,4 +14,5 @@ export interface Song extends Document {
   readonly uploader_id: string;
   readonly duration?: number;
   readonly listLikedUser?: Array<string>;
+  readonly listComment?: Array<string>;
 }

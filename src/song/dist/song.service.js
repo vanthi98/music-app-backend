@@ -87,14 +87,23 @@ var SongService = /** @class */ (function () {
             });
         });
     };
+    SongService.prototype.findOne = function (songId) {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.songModel.findOne({ _id: songId })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     SongService.prototype.getAllSong = function (keyword) {
         return __awaiter(this, void 0, Promise, function () {
-            var regex, listSong, listSong;
+            var listSong, listSong;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!keyword) return [3 /*break*/, 2];
-                        regex = /()()/;
                         return [4 /*yield*/, this.songModel.find({
                                 song_name: { $regex: new RegExp(keyword, "i") }
                             })];
@@ -120,6 +129,20 @@ var SongService = /** @class */ (function () {
                     case 1:
                         updateSong = _a.sent();
                         return [4 /*yield*/, updateSong];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    SongService.prototype.updateListComment = function (listComment, songId) {
+        return __awaiter(this, void 0, Promise, function () {
+            var updateComment;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.songModel.findOneAndUpdate({ _id: songId }, { listComment: listComment }, { "new": true })];
+                    case 1:
+                        updateComment = _a.sent();
+                        return [4 /*yield*/, updateComment];
                     case 2: return [2 /*return*/, _a.sent()];
                 }
             });

@@ -16,5 +16,6 @@ exports.SongSchema = new Schema({
     share: Number,
     uploader: String,
     duration: Number,
-    listLikedUser: [{ type: Schema.Types.ObjectId, ref: "Profile" }]
+    listLikedUser: [{ type: Schema.Types.ObjectId, ref: "Profile" }],
+    listComment: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
 });

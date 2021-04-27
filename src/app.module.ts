@@ -11,6 +11,12 @@ import { MailerModule } from "@nestjs-modules/mailer";
 import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
 import { SongModule } from "./song/song.module";
 import { Test } from "@nestjs/testing";
+import { CommentService } from "./comment/comment.service";
+import { CommentResolver } from "./comment/comment.resolver";
+import { CommentModule } from "./comment/comment.module";
+import { PlaylistResolver } from "./playlist/playlist.resolver";
+import { PlaylistService } from "./playlist/playlist.service";
+import { PlaylistModule } from "./playlist/playlist.module";
 
 @Module({
   imports: [
@@ -50,7 +56,9 @@ import { Test } from "@nestjs/testing";
     AuthModule,
     ProfileModule,
     SongModule,
-    TestModule
+    TestModule,
+    CommentModule,
+    PlaylistModule
   ],
   controllers: [AppController],
   providers: [AppService]

@@ -62,10 +62,38 @@ type SongType {
   uploader: String!
   duration: Float!
   listLikedUser: [String!]
+  listComment: [String!]
 }
 
 type UploadSongType {
-  id: ID!
+  _id: ID!
+}
+
+type UserType {
+  account_name: String
+  avatarUrl: String
+}
+
+type CommentType {
+  _id: ID!
+  user: UserType!
+  song: String!
+  parent: String
+  title: String!
+  content: String!
+  like: Float!
+  dislike: Float!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type CreateCommentType {
+  _id: ID!
 }
 
 type Query {
@@ -84,6 +112,7 @@ type Query {
   getLikedSongByCurrentAccount: [SongType!]!
   getHistoryByCurrentAccount: [SongType!]!
   getLikedSongByEmail(account_email: String!): [SongType!]!
+  getCommentBySong(song_id: String!): [CommentType!]!
 }
 
 type Mutation {
@@ -103,6 +132,7 @@ type Mutation {
   unlikeSong(song_id: String!): String!
   listenSong(song_id: String!): String!
   updateSong(input: SongUpdateInput!, song_id: String!): SongType!
+  createComment(input: CommentInput!, parent_id: String, song_id: String!): CreateCommentType!
 }
 
 input AccountInput {
@@ -152,4 +182,9 @@ input SongUpdateInput {
   song_image_url: String
   lyric: String
   author: String
+}
+
+input CommentInput {
+  title: String!
+  content: String!
 }

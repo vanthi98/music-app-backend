@@ -1,11 +1,10 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ProfileResolver } from "./profile.resolver";
 import { ProfileSchema } from "./profile.schema";
 import { ProfileService } from "./profile.service";
 import { JwtModule } from "@nestjs/jwt";
 import { AccountModule } from "../account/account.module";
-import { forwardRef } from "@nestjs/common";
 
 @Module({
   imports: [

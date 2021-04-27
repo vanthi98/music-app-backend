@@ -28,10 +28,12 @@ export class SongType {
   readonly duration: number;
   @Field(() => [String], { nullable: true })
   readonly listLikedUser?: string[];
+  @Field(() => [String], { nullable: true })
+  readonly listComment?: string[];
 }
 
 @ObjectType()
 export class UploadSongType {
   @Field(() => ID)
-  readonly id?: string;
+  readonly _id?: string;
 }

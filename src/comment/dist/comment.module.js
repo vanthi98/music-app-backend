@@ -6,31 +6,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.ProfileModule = void 0;
+exports.CommentModule = void 0;
 var common_1 = require("@nestjs/common");
 var mongoose_1 = require("@nestjs/mongoose");
-var profile_resolver_1 = require("./profile.resolver");
-var profile_schema_1 = require("./profile.schema");
-var profile_service_1 = require("./profile.service");
+var comment_resolver_1 = require("./comment.resolver");
+var comment_schema_1 = require("./comment.schema");
+var comment_service_1 = require("./comment.service");
 var jwt_1 = require("@nestjs/jwt");
-var account_module_1 = require("../account/account.module");
-var ProfileModule = /** @class */ (function () {
-    function ProfileModule() {
+var profile_module_1 = require("../profile/profile.module");
+var song_module_1 = require("../song/song.module");
+var CommentModule = /** @class */ (function () {
+    function CommentModule() {
     }
-    ProfileModule = __decorate([
+    CommentModule = __decorate([
         common_1.Module({
             imports: [
-                common_1.forwardRef(function () { return account_module_1.AccountModule; }),
-                mongoose_1.MongooseModule.forFeature([{ name: "Profile", schema: profile_schema_1.ProfileSchema }]),
+                profile_module_1.ProfileModule,
+                song_module_1.SongModule,
+                mongoose_1.MongooseModule.forFeature([{ name: "Comment", schema: comment_schema_1.CommentSchema }]),
                 jwt_1.JwtModule.register({
                     secret: "secretKey",
                     signOptions: { expiresIn: "9000s" }
                 })
             ],
-            providers: [profile_resolver_1.ProfileResolver, profile_service_1.ProfileService],
-            exports: [profile_service_1.ProfileService]
+            providers: [comment_resolver_1.CommentResolver, comment_service_1.CommentService],
+            exports: [comment_service_1.CommentService]
         })
-    ], ProfileModule);
-    return ProfileModule;
+    ], CommentModule);
+    return CommentModule;
 }());
-exports.ProfileModule = ProfileModule;
+exports.CommentModule = CommentModule;

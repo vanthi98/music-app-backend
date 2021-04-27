@@ -19,6 +19,8 @@ var test_module_1 = require("./test/test.module");
 var mailer_1 = require("@nestjs-modules/mailer");
 var ejs_adapter_1 = require("@nestjs-modules/mailer/dist/adapters/ejs.adapter");
 var song_module_1 = require("./song/song.module");
+var comment_module_1 = require("./comment/comment.module");
+var playlist_module_1 = require("./playlist/playlist.module");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -61,7 +63,9 @@ var AppModule = /** @class */ (function () {
                 auth_module_1.AuthModule,
                 profile_module_1.ProfileModule,
                 song_module_1.SongModule,
-                test_module_1.TestModule
+                test_module_1.TestModule,
+                comment_module_1.CommentModule,
+                playlist_module_1.PlaylistModule
             ],
             controllers: [app_controller_1.AppController],
             providers: [app_service_1.AppService]

@@ -7,7 +7,6 @@ import { UploadSongType, SongType } from "./dto/song.dto";
 import { ProfileService } from "../profile/profile.service";
 import { AccountService } from "../account/account.service";
 import * as mongoose from "mongoose";
-import { max } from "class-validator";
 
 @Injectable()
 export class SongService {
@@ -34,9 +33,12 @@ export class SongService {
     return await newSong.save();
   }
 
+  async findOne(songId: string): Promise<SongType> {
+    return await this.songModel.findOne({ _id: songId });
+  }
+
   async getAllSong(keyword: string): Promise<Array<SongType>> {
     if (keyword) {
-      const regex = /()()/;
       const listSong = await this.songModel.find({
         song_name: { $regex: new RegExp(keyword, "i") }
       });
@@ -52,6 +54,18 @@ export class SongService {
       new: true
     });
     return await updateSong;
+  }
+
+  async updateListComment(
+    listComment: Array<any>,
+    songId: string
+  ): Promise<SongType> {
+    const updateComment = await this.songModel.findOneAndUpdate(
+      { _id: songId },
+      { listComment },
+      { new: true }
+    );
+    return await updateComment;
   }
 
   async updateSong(

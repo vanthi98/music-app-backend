@@ -50,6 +50,9 @@ var SongType = /** @class */ (function () {
     __decorate([
         graphql_1.Field(function () { return [String]; }, { nullable: true })
     ], SongType.prototype, "listLikedUser");
+    __decorate([
+        graphql_1.Field(function () { return [String]; }, { nullable: true })
+    ], SongType.prototype, "listComment");
     SongType = __decorate([
         graphql_1.ObjectType()
     ], SongType);
@@ -61,7 +64,7 @@ var UploadSongType = /** @class */ (function () {
     }
     __decorate([
         graphql_1.Field(function () { return graphql_1.ID; })
-    ], UploadSongType.prototype, "id");
+    ], UploadSongType.prototype, "_id");
     UploadSongType = __decorate([
         graphql_1.ObjectType()
     ], UploadSongType);
