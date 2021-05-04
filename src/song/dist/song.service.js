@@ -91,7 +91,7 @@ var SongService = /** @class */ (function () {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.songModel.findOne({ _id: songId })];
+                    case 0: return [4 /*yield*/, this.songModel.findById(songId)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
@@ -254,7 +254,6 @@ var SongService = /** @class */ (function () {
                             .exec()];
                     case 9:
                         increaseListen = _a.sent();
-                        console.log(increaseListen);
                         return [2 /*return*/, increaseListen.listen];
                     case 10:
                         error_1 = _a.sent();

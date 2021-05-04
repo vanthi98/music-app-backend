@@ -30,6 +30,7 @@ type ProfileType {
   listFollowings: [String!]
   listFollowers: [String!]
   listHistory: [HistoryType!]
+  listPlaylist: [String!]
 }
 
 type Account {
@@ -96,6 +97,20 @@ type CreateCommentType {
   _id: ID!
 }
 
+type PlaylistType {
+  _id: ID!
+  user: String!
+  name: String!
+  notes: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  listSong: [String!]
+}
+
+type CreatePlaylistType {
+  _id: ID!
+}
+
 type Query {
   getAllAccount: [AccountType!]!
   getAccount(id: String!): AccountType!
@@ -107,12 +122,16 @@ type Query {
   getAllTest: [TestType!]!
   getOneTest(title: String!): TestType!
   getAllSong(keyword: String): [SongType!]!
+  getSong(song_id: String): SongType!
   getSongByCurrentAccount: [SongType!]!
   getSongByAccount(account_email: String!): [SongType!]!
   getLikedSongByCurrentAccount: [SongType!]!
   getHistoryByCurrentAccount: [SongType!]!
   getLikedSongByEmail(account_email: String!): [SongType!]!
   getCommentBySong(song_id: String!): [CommentType!]!
+  getAllPlaylist: [PlaylistType!]!
+  getSongByPlaylist(playlist_id: String!): [SongType!]!
+  getPlaylistById(playlist_id: String!): PlaylistType!
 }
 
 type Mutation {
@@ -133,6 +152,10 @@ type Mutation {
   listenSong(song_id: String!): String!
   updateSong(input: SongUpdateInput!, song_id: String!): SongType!
   createComment(input: CommentInput!, parent_id: String, song_id: String!): CreateCommentType!
+  createPlaylist(input: CreatePlaylistInput!): CreatePlaylistType!
+  addSongToPlaylist(song_id: String!, playlist_id: String!): CreatePlaylistType!
+  removeSongFromPlaylist(song_id: String!, playlist_id: String!): CreatePlaylistType!
+  removePlaylist(playlist_id: String!): String!
 }
 
 input AccountInput {
@@ -187,4 +210,10 @@ input SongUpdateInput {
 input CommentInput {
   title: String!
   content: String!
+}
+
+input CreatePlaylistInput {
+  name: String!
+  notes: String
+  listSong: [String!]
 }

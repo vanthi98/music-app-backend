@@ -28,8 +28,6 @@ const makeid = async length => {
   return result;
 };
 
-console.log(makeid(5));
-
 @Injectable()
 export class AccountService {
   constructor(

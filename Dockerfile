@@ -14,5 +14,5 @@ RUN chmod +x entrypoint.sh
 
 EXPOSE 4000
 
-CMD ["./entrypoint.sh"]
+CMD npm run start:dev
 

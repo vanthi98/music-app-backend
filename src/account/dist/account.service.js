@@ -62,7 +62,6 @@ var makeid = function (length) { return __awaiter(void 0, void 0, void 0, functi
         return [2 /*return*/, result];
     });
 }); };
-console.log(makeid(5));
 var AccountService = /** @class */ (function () {
     function AccountService(accountModel, profileService, mailerService) {
         this.accountModel = accountModel;

@@ -19,5 +19,6 @@ exports.ProfileSchema = new mongoose.Schema({
     listLikedSong: [{ type: Schema.Types.ObjectId, ref: "Song" }],
     listFollowers: [{ type: Schema.Types.ObjectId, ref: "Profile" }],
     listFollowings: [{ type: Schema.Types.ObjectId, ref: "Profile" }],
-    listHistory: [exports.History]
+    listHistory: [exports.History],
+    listPlaylist: [{ type: Schema.Types.ObjectId, ref: "Playlist" }]
 });

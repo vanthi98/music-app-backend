@@ -25,6 +25,13 @@ export class SongResolver {
     return this.songService.getAllSong(keyword);
   }
 
+  @Query(() => SongType)
+  async getSong(
+    @Args("song_id", { nullable: true, type: () => String }) song_id: string
+  ): Promise<SongType> {
+    return this.songService.findOne(song_id);
+  }
+
   @Query(() => [SongType])
   @UseGuards(GqlAuthGuard)
   async getSongByCurrentAccount(

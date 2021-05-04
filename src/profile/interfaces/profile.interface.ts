@@ -13,4 +13,5 @@ export interface Profile extends Document {
   readonly listFollowers?: Array<any>;
   readonly listFollowings?: Array<any>;
   readonly listHistory?: Array<any>;
+  readonly listPlaylist?: Array<any>;
 }

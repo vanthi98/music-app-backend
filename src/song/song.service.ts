@@ -34,7 +34,7 @@ export class SongService {
   }
 
   async findOne(songId: string): Promise<SongType> {
-    return await this.songModel.findOne({ _id: songId });
+    return await this.songModel.findById(songId);
   }
 
   async getAllSong(keyword: string): Promise<Array<SongType>> {
@@ -167,7 +167,6 @@ export class SongService {
       const increaseListen = await this.songModel
         .findByIdAndUpdate(song_id, { $inc: { listen: 1 } }, { new: true })
         .exec();
-      console.log(increaseListen);
       return increaseListen.listen;
     } catch (error) {
       throw new Error("Cant not listen song" + error);

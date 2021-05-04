@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: music-app-backend:v1
     ports:
       - "4000:4000"
@@ -14,6 +16,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
       MONGO_INITDB_ROOT_PASSWORD: mongo
+      MONGO_INITDB_DATABASE: music
     ports:
       - 27017:27017
   mongo-seed:

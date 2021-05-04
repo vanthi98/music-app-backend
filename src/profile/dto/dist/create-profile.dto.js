@@ -68,6 +68,9 @@ var ProfileType = /** @class */ (function () {
     __decorate([
         graphql_1.Field(function () { return [HistoryType]; }, { nullable: true })
     ], ProfileType.prototype, "listHistory");
+    __decorate([
+        graphql_1.Field(function () { return [String]; }, { nullable: true })
+    ], ProfileType.prototype, "listPlaylist");
     ProfileType = __decorate([
         graphql_1.ObjectType()
     ], ProfileType);

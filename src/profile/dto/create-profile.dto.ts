@@ -32,11 +32,13 @@ export class ProfileType {
   @Field({ nullable: true })
   readonly account_name?: string;
   @Field(() => [String], { nullable: true })
-  readonly listLikedSong?: string[];
+  readonly listLikedSong?: Array<string>;
   @Field(() => [String], { nullable: true })
-  readonly listFollowings?: string[];
+  readonly listFollowings?: Array<string>;
   @Field(() => [String], { nullable: true })
-  readonly listFollowers?: string[];
+  readonly listFollowers?: Array<string>;
   @Field(() => [HistoryType], { nullable: true })
-  readonly listHistory?: HistoryType[];
+  readonly listHistory?: Array<HistoryType>;
+  @Field(() => [String], { nullable: true })
+  readonly listPlaylist?: Array<string>;
 }

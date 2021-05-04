@@ -69,6 +69,13 @@ var SongResolver = /** @class */ (function () {
             });
         });
     };
+    SongResolver.prototype.getSong = function (song_id) {
+        return __awaiter(this, void 0, Promise, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.songService.findOne(song_id)];
+            });
+        });
+    };
     SongResolver.prototype.getSongByCurrentAccount = function (currentUser) {
         return __awaiter(this, void 0, Promise, function () {
             return __generator(this, function (_a) {
@@ -168,6 +175,10 @@ var SongResolver = /** @class */ (function () {
         graphql_1.Query(function () { return [song_dto_1.SongType]; }),
         __param(0, graphql_1.Args("keyword", { nullable: true, type: function () { return String; } }))
     ], SongResolver.prototype, "getAllSong");
+    __decorate([
+        graphql_1.Query(function () { return song_dto_1.SongType; }),
+        __param(0, graphql_1.Args("song_id", { nullable: true, type: function () { return String; } }))
+    ], SongResolver.prototype, "getSong");
     __decorate([
         graphql_1.Query(function () { return [song_dto_1.SongType]; }),
         common_1.UseGuards(graphqlAuth_1.GqlAuthGuard),

@@ -39,6 +39,7 @@ export class CommentService {
     const { _id } = result;
     const song = await this.songService.findOne(song_id);
     const { listComment } = song;
+    console.log(listComment);
     await this.songService.updateListComment(
       [...listComment, new mongoose.mongo.ObjectId(_id)],
       song_id
@@ -84,7 +85,6 @@ export class CommentService {
       };
       result.push(adapterComment);
     }
-    console.log(result);
     return result;
   }
 

@@ -12,5 +12,7 @@ exports.CommentSchema = new Schema({
     like: Number,
     dislike: Number,
     createdAt: Date,
-    updatedAt: Date
+    updatedAt: Date,
+    listLike: [{ type: Schema.Types.ObjectId, ref: "Profile" }],
+    listDislike: [{ type: Schema.Types.ObjectId, ref: "Profile" }]
 });

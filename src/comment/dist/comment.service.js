@@ -93,6 +93,7 @@ var CommentService = /** @class */ (function () {
                     case 3:
                         song = _a.sent();
                         listComment = song.listComment;
+                        console.log(listComment);
                         return [4 /*yield*/, this.songService.updateListComment(__spreadArrays(listComment, [new mongoose.mongo.ObjectId(_id)]), song_id)];
                     case 4:
                         _a.sent();
@@ -144,9 +145,7 @@ var CommentService = /** @class */ (function () {
                     case 5:
                         i++;
                         return [3 /*break*/, 2];
-                    case 6:
-                        console.log(result);
-                        return [2 /*return*/, result];
+                    case 6: return [2 /*return*/, result];
                 }
             });
         });
