@@ -10,9 +10,7 @@ RUN npm install
 
 COPY . .
 
-RUN chmod +x entrypoint.sh
+ENTRYPOINT ["sh", "./entrypoint.sh"]
 
 EXPOSE 4000
-
-CMD npm run start:dev
 

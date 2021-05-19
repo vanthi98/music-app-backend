@@ -62,4 +62,18 @@ export class ProfileResolver {
   ): Promise<string> {
     return this.profileService.checkFollow(currentUser, follow_id);
   }
+
+  @Query(() => [ProfileType])
+  @UseGuards(GqlAuthGuard)
+  async getListFollowers(@CtxUser() currentUser): Promise<Array<ProfileType>> {
+    const email = currentUser.payload.accountId;
+    return this.profileService.getListFollowersOfUser(email);
+  }
+
+  @Query(() => [ProfileType])
+  @UseGuards(GqlAuthGuard)
+  async getListFollowings(@CtxUser() currentUser): Promise<Array<ProfileType>> {
+    const email = currentUser.payload.accountId;
+    return this.profileService.getListFollowingsOfUser(email);
+  }
 }

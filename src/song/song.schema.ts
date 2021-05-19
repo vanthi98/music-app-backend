@@ -14,6 +14,11 @@ export const SongSchema = new Schema({
   share: Number,
   uploader: String,
   duration: Number,
+  createdAt: Date,
+  updatedAt: Date,
+  status: Boolean,
   listLikedUser: [{ type: Schema.Types.ObjectId, ref: "Profile" }],
-  listComment: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
+  listComment: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
+  country: { type: Schema.Types.ObjectId, ref: "Country" },
+  category: { type: Schema.Types.ObjectId, ref: "Category" }
 });

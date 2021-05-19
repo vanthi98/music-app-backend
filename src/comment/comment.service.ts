@@ -20,7 +20,8 @@ export class CommentService {
     email: string,
     song_id: string,
     parent?: string,
-    input?: CommentInput
+    input?: CommentInput,
+    replyTo?: string
   ): Promise<CreateCommentType> {
     const current = new Date();
     const profile = await this.profileService.getProfileByEmail(email);
@@ -32,14 +33,39 @@ export class CommentService {
       parent,
       like: 0,
       dislike: 0,
+      replyTo,
       createdAt: current,
       updatedAt: current
     });
     const result = await newComment.save();
     const { _id } = result;
+    const parentComment = await this.commentModel.findById(parent);
+    if (parentComment) {
+      const { children, user } = parentComment;
+      if (!children || children.length === 0) {
+        await this.commentModel.findOneAndUpdate(
+          { _id: parentComment._id },
+          {
+            children: [...children, new mongoose.mongo.ObjectId(_id)]
+          },
+          { new: true }
+        );
+      } else {
+        if (children.indexOf(_id) > -1) {
+          throw new Error("Comment này đã có trong list");
+        } else {
+          await this.commentModel.findOneAndUpdate(
+            { _id: parentComment._id },
+            {
+              children: [...children, new mongoose.mongo.ObjectId(_id)]
+            },
+            { new: true }
+          );
+        }
+      }
+    }
     const song = await this.songService.findOne(song_id);
     const { listComment } = song;
-    console.log(listComment);
     await this.songService.updateListComment(
       [...listComment, new mongoose.mongo.ObjectId(_id)],
       song_id
@@ -65,7 +91,9 @@ export class CommentService {
         like,
         dislike,
         createdAt,
-        updatedAt
+        updatedAt,
+        children,
+        replyTo
       } = comment;
 
       const adapterComment = {
@@ -78,7 +106,10 @@ export class CommentService {
         dislike,
         createdAt,
         updatedAt,
+        replyTo,
+        children,
         user: {
+          id: profile.id,
           account_name: profile.account_name,
           avatarUrl: profile.avatarUrl
         }

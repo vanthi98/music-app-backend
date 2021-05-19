@@ -48,6 +48,11 @@ export class SongResolver {
   }
 
   @Query(() => [SongType])
+  async getSongById(@Args("id") id: string): Promise<Array<SongType>> {
+    return this.songService.getUploadedSongById(id);
+  }
+
+  @Query(() => [SongType])
   @UseGuards(GqlAuthGuard)
   async getLikedSongByCurrentAccount(
     @CtxUser() user

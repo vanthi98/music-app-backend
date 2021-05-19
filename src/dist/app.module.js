@@ -37,7 +37,7 @@ var AppModule = /** @class */ (function () {
                 // MongooseModule.forRoot(
                 //   "mongodb+srv://vanthi1211:react19001560@cluster0.qe56j.mongodb.net/music?retryWrites=true&w=majority"
                 // ),
-                mongoose_1.MongooseModule.forRoot("mongodb://localhost:27017/music"),
+                mongoose_1.MongooseModule.forRoot("mongodb://mongodb:27017/music"),
                 mailer_1.MailerModule.forRoot({
                     transport: {
                         host: "smtp.gmail.com",

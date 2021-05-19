@@ -5,24 +5,19 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: music-app-backend:v1
+    volumes:
+      - ./:/workspace/music-app-backend
     ports:
-      - "4000:4000"
+      - 4000:4000
+    restart: always
     depends_on:
       - mongodb
   mongodb:
+    hostname: mongodb
     image: mongo:4.4.4-bionic
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo
-      MONGO_INITDB_ROOT_PASSWORD: mongo
-      MONGO_INITDB_DATABASE: music
+    container_name: mongodb-music
     ports:
       - 27017:27017
-  mongo-seed:
-    image: mongo:4.4.4-bionic
-    links:
-      - mongodb
     volumes:
-      - ./mongo-seed:/mongo-seed
-    command: /mongo-seed/import.sh
+      - ./data:/data/db

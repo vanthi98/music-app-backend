@@ -1,3 +1,4 @@
+import { NotificationService } from "./../notification/notification.service";
 import { AccountService } from "./../account/account.service";
 import { Injectable, Inject, forwardRef } from "@nestjs/common";
 import { Model } from "mongoose";
@@ -12,7 +13,9 @@ export class ProfileService {
   constructor(
     @InjectModel("Profile") private profileModel: Model<Profile>,
     @Inject(forwardRef(() => AccountService))
-    private readonly accountService: AccountService
+    private readonly accountService: AccountService,
+    @Inject(forwardRef(() => NotificationService))
+    private readonly notificationService: NotificationService
   ) {}
 
   async create(
@@ -170,6 +173,15 @@ export class ProfileService {
           );
         }
       }
+      await this.notificationService.createNotice(
+        {
+          title: "Theo dõi",
+          description: `Người dùng ${profile.account_name} vừa theo dõi bạn`,
+          type: "follow",
+          status: "processing"
+        },
+        follow_id
+      );
     }
     return follow_id;
   }
@@ -228,7 +240,48 @@ export class ProfileService {
           return Promise.reject("You is not exist in this user followers list");
         }
       }
+      await this.notificationService.createNotice(
+        {
+          title: "Bỏ Theo dõi",
+          description: `Người dùng ${profile.account_name} vừa bỏ theo dõi bạn`,
+          type: "unFollow",
+          status: "processing"
+        },
+        follow_id
+      );
     }
     return follow_id;
+  }
+
+  async getListFollowersOfUser(email: string): Promise<Array<ProfileType>> {
+    try {
+      const profile = await this.getProfileByEmail(email);
+      const { listFollowers } = profile;
+      const listFollowerLength: number = listFollowers.length;
+      const result: Array<ProfileType> = [];
+      for (let i = 0; i < listFollowerLength; i++) {
+        const follower = await this.getProfileById(listFollowers[i]);
+        result.push(follower);
+      }
+      return result;
+    } catch (error) {
+      throw new Error("Không thể tìm thấy profile người dùng");
+    }
+  }
+
+  async getListFollowingsOfUser(email: string): Promise<Array<ProfileType>> {
+    try {
+      const profile = await this.getProfileByEmail(email);
+      const { listFollowings } = profile;
+      const listFollowingLength: number = listFollowings.length;
+      const result: Array<ProfileType> = [];
+      for (let i = 0; i < listFollowingLength; i++) {
+        const follower = await this.getProfileById(listFollowings[i]);
+        result.push(follower);
+      }
+      return result;
+    } catch (error) {
+      throw new Error("Không thể tìm thấy profile người dùng");
+    }
   }
 }

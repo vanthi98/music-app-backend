@@ -11,5 +11,6 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true
-  }
+  },
+  "exclude": ["tmp", "dist", "node_modules", "bower_components"]
 }

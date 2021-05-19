@@ -10,4 +10,6 @@ export interface Comment extends Document {
   readonly dislike: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;
+  readonly children: Array<string>;
+  readonly replyTo: string;
 }

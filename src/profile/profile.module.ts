@@ -1,3 +1,4 @@
+import { NotificationModule } from "./../notification/notification.module";
 import { Module, forwardRef } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ProfileResolver } from "./profile.resolver";
@@ -9,6 +10,7 @@ import { AccountModule } from "../account/account.module";
 @Module({
   imports: [
     forwardRef(() => AccountModule),
+    forwardRef(() => NotificationModule),
     MongooseModule.forFeature([{ name: "Profile", schema: ProfileSchema }]),
     JwtModule.register({
       secret: "secretKey",

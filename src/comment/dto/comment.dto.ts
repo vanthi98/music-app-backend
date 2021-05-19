@@ -30,6 +30,10 @@ export class CommentType {
   readonly createdAt?: Date;
   @Field({ nullable: true })
   readonly updatedAt?: Date;
+  @Field(() => [String], { nullable: true })
+  readonly children?: Array<string>;
+  @Field({ nullable: true })
+  readonly replyTo?: string;
 }
 
 @ObjectType()

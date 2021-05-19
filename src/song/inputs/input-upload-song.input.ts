@@ -1,4 +1,4 @@
-import { InputType, Field, Int } from "@nestjs/graphql";
+import { InputType, Field } from "@nestjs/graphql";
 @InputType()
 export class SongInput {
   @Field()
@@ -11,6 +11,10 @@ export class SongInput {
   readonly lyric?: string;
   @Field({ nullable: true })
   readonly author?: string;
+  @Field({ nullable: true })
+  readonly country?: string;
+  @Field({ nullable: true })
+  readonly category?: string;
 }
 
 @InputType()
@@ -25,4 +29,8 @@ export class SongUpdateInput {
   readonly lyric?: string;
   @Field({ nullable: true })
   readonly author?: string;
+  @Field({ nullable: true })
+  readonly country?: string;
+  @Field({ nullable: true })
+  readonly category?: string;
 }

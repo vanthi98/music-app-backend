@@ -1,5 +1,4 @@
 import { Document } from "mongoose";
-
 export interface Song extends Document {
   readonly id?: string;
   readonly song_name: string;
@@ -15,4 +14,8 @@ export interface Song extends Document {
   readonly duration?: number;
   readonly listLikedUser?: Array<string>;
   readonly listComment?: Array<string>;
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
+  readonly country: string;
+  readonly category: string;
 }

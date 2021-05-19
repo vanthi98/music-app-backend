@@ -5,6 +5,7 @@ export const CommentSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "Profile" },
   song: { type: Schema.Types.ObjectId, ref: "Song" },
   parent: { type: Schema.Types.ObjectId, ref: "Comment" },
+  replyTo: String,
   title: String,
   content: String,
   like: Number,
@@ -12,5 +13,6 @@ export const CommentSchema = new Schema({
   createdAt: Date,
   updatedAt: Date,
   listLike: [{ type: Schema.Types.ObjectId, ref: "Profile" }],
-  listDislike: [{ type: Schema.Types.ObjectId, ref: "Profile" }]
+  listDislike: [{ type: Schema.Types.ObjectId, ref: "Profile" }],
+  children: [{ type: Schema.Types.ObjectId, ref: "Comment" }]
 });

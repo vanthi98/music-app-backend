@@ -10,13 +10,11 @@ import { TestModule } from "./test/test.module";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { EjsAdapter } from "@nestjs-modules/mailer/dist/adapters/ejs.adapter";
 import { SongModule } from "./song/song.module";
-import { Test } from "@nestjs/testing";
-import { CommentService } from "./comment/comment.service";
-import { CommentResolver } from "./comment/comment.resolver";
 import { CommentModule } from "./comment/comment.module";
-import { PlaylistResolver } from "./playlist/playlist.resolver";
-import { PlaylistService } from "./playlist/playlist.service";
 import { PlaylistModule } from "./playlist/playlist.module";
+import { CategoryModule } from "./category/category.module";
+import { CountryModule } from "./country/country.module";
+import { NotificationModule } from "./notification/notification.module";
 
 @Module({
   imports: [
@@ -30,7 +28,7 @@ import { PlaylistModule } from "./playlist/playlist.module";
     // MongooseModule.forRoot(
     //   "mongodb+srv://vanthi1211:react19001560@cluster0.qe56j.mongodb.net/music?retryWrites=true&w=majority"
     // ),
-    MongooseModule.forRoot("mongodb://localhost:27017/music"),
+    MongooseModule.forRoot("mongodb://mongodb:27017/music"),
     MailerModule.forRoot({
       transport: {
         host: "smtp.gmail.com",
@@ -58,7 +56,10 @@ import { PlaylistModule } from "./playlist/playlist.module";
     SongModule,
     TestModule,
     CommentModule,
-    PlaylistModule
+    PlaylistModule,
+    CategoryModule,
+    CountryModule,
+    NotificationModule
   ],
   controllers: [AppController],
   providers: [AppService]

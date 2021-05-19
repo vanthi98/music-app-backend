@@ -20,7 +20,8 @@ export class SongService {
     account_id: string,
     input: SongInput
   ): Promise<UploadSongType> {
-    const { lyric, song_url } = input;
+    const current = new Date();
+    const { lyric } = input;
     const newSong: Model = new this.songModel({
       ...input,
       lyric: lyric ? lyric : "",
@@ -28,7 +29,9 @@ export class SongService {
       comment: 0,
       share: 0,
       listen: 0,
-      uploader: account_id
+      uploader: account_id,
+      createdAt: current,
+      updatedAt: current
     });
     return await newSong.save();
   }
@@ -87,6 +90,20 @@ export class SongService {
     return listSongByAccountName;
   }
 
+  async getUploadedSongById(id: string): Promise<Array<SongType>> {
+    try {
+      const profile = await this.profileService.getProfileById(id);
+      const account = await this.accountService.findOne(profile.account_id);
+      const { email } = account;
+      const listSongById = this.songModel.find({
+        uploader: email
+      });
+      return listSongById;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   async getUploadedSongByAccount(
     account_email: string
   ): Promise<Array<SongType>> {
@@ -121,6 +138,7 @@ export class SongService {
           listHistory.filter(song => {
             return song.song_id.toString() === song_id;
           }).length > 0;
+        // eslint-disable-next-line
         const maxOrder = Math.max.apply(
           Math,
           listHistory.map(function(song) {

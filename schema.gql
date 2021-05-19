@@ -10,6 +10,27 @@ type AccountType {
   resetPasswordExpires: Float
 }
 
+type NotificationType {
+  _id: ID!
+  thumbnail: String
+  notice_id: String!
+  title: String!
+  description: String!
+  createdAt: DateTime
+  type: String!
+  status: String!
+  user: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type CreateNotificationType {
+  _id: ID!
+}
+
 type HistoryType {
   song_id: String!
   order: Float!
@@ -64,6 +85,10 @@ type SongType {
   duration: Float!
   listLikedUser: [String!]
   listComment: [String!]
+  country: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  category: String
 }
 
 type UploadSongType {
@@ -86,12 +111,9 @@ type CommentType {
   dislike: Float!
   createdAt: DateTime
   updatedAt: DateTime
+  children: [String!]
+  replyTo: String
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type CreateCommentType {
   _id: ID!
@@ -111,20 +133,40 @@ type CreatePlaylistType {
   _id: ID!
 }
 
+type CategoryType {
+  _id: ID!
+  category_id: String!
+  name: String!
+  slug: String!
+  listSong: [String!]
+}
+
+type CountryType {
+  _id: ID!
+  country_id: String!
+  name: String!
+  slug: String!
+  listSong: [String!]
+}
+
 type Query {
   getAllAccount: [AccountType!]!
   getAccount(id: String!): AccountType!
   getCurrentAccountId: String!
+  getNoticeByCurrentAccount: [NotificationType!]!
   getProfile(id: String!): ProfileType!
   getProfileByAccountId(account_id: String!): ProfileType!
   getProfileByEmail(email: String!): ProfileType!
   checkFollow(follow_id: String!): String!
+  getListFollowers: [ProfileType!]!
+  getListFollowings: [ProfileType!]!
   getAllTest: [TestType!]!
   getOneTest(title: String!): TestType!
   getAllSong(keyword: String): [SongType!]!
   getSong(song_id: String): SongType!
   getSongByCurrentAccount: [SongType!]!
   getSongByAccount(account_email: String!): [SongType!]!
+  getSongById(id: String!): [SongType!]!
   getLikedSongByCurrentAccount: [SongType!]!
   getHistoryByCurrentAccount: [SongType!]!
   getLikedSongByEmail(account_email: String!): [SongType!]!
@@ -132,6 +174,7 @@ type Query {
   getAllPlaylist: [PlaylistType!]!
   getSongByPlaylist(playlist_id: String!): [SongType!]!
   getPlaylistById(playlist_id: String!): PlaylistType!
+  getAllCountry: [CountryType!]!
 }
 
 type Mutation {
@@ -140,6 +183,7 @@ type Mutation {
   confirmResetPasswordToken(token: String!): Boolean!
   resetAccountPassword(input: ResetPasswordInput!): AccountType!
   deleteResetPasswordToken(email: String!): String!
+  createNotification(user_id: String!, input: NotificationInput!): CreateNotificationType!
   updateProfile(input: ProfileInput!, id: String!): ProfileType!
   followUser(follow_id: String!): String!
   unFollowUser(follow_id: String!): String!
@@ -151,7 +195,7 @@ type Mutation {
   unlikeSong(song_id: String!): String!
   listenSong(song_id: String!): String!
   updateSong(input: SongUpdateInput!, song_id: String!): SongType!
-  createComment(input: CommentInput!, parent_id: String, song_id: String!): CreateCommentType!
+  createComment(replyTo: String, input: CommentInput!, parent_id: String, song_id: String!): CreateCommentType!
   createPlaylist(input: CreatePlaylistInput!): CreatePlaylistType!
   addSongToPlaylist(song_id: String!, playlist_id: String!): CreatePlaylistType!
   removeSongFromPlaylist(song_id: String!, playlist_id: String!): CreatePlaylistType!
@@ -172,6 +216,13 @@ input AccountInput {
 input ResetPasswordInput {
   token: String!
   password: String!
+}
+
+input NotificationInput {
+  title: String!
+  description: String!
+  type: String!
+  status: String!
 }
 
 input ProfileInput {
@@ -197,6 +248,8 @@ input SongInput {
   song_image_url: String
   lyric: String
   author: String
+  country: String
+  category: String
 }
 
 input SongUpdateInput {
@@ -205,6 +258,8 @@ input SongUpdateInput {
   song_image_url: String
   lyric: String
   author: String
+  country: String
+  category: String
 }
 
 input CommentInput {

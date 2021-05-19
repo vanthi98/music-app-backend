@@ -16,10 +16,17 @@ export class CommentResolver {
     @Args("song_id") song_id: string,
     @Args("parent_id", { nullable: true, type: () => String })
     parent_id: string,
-    @Args("input") input: CommentInput
+    @Args("input") input: CommentInput,
+    @Args("replyTo", { nullable: true, type: () => String }) replyTo: string
   ): Promise<CreateCommentType> {
     const email = currentUser.payload.accountId;
-    return this.commentService.createComment(email, song_id, parent_id, input);
+    return this.commentService.createComment(
+      email,
+      song_id,
+      parent_id,
+      input,
+      replyTo
+    );
   }
 
   @Query(() => [CommentType])
