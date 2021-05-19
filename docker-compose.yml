@@ -21,3 +21,6 @@ services:
       - 27017:27017
     volumes:
       - ./data:/data/db
+    command: --wiredTigerCacheSizeGB 1.5
+    logging:
+      driver: none
