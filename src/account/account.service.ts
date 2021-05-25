@@ -89,7 +89,6 @@ export class AccountService {
     }
 
     const token = await makeid(20);
-    console.log(token);
 
     const result = await this.accountModel.findOneAndUpdate(
       { _id: found.id },

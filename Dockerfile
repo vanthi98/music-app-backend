@@ -8,6 +8,8 @@ ADD yarn.lock ./
 
 RUN npm install
 
+ENV GRAPHQL_PLAYGROUND=true
+
 COPY . .
 
 ENTRYPOINT ["sh", "./entrypoint.sh"]

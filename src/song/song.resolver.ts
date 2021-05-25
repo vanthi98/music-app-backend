@@ -5,6 +5,7 @@ import { SongInput, SongUpdateInput } from "./inputs/input-upload-song.input";
 import { UseGuards } from "@nestjs/common";
 import { GqlAuthGuard } from "../auth/graphqlAuth";
 import { CtxUser } from "../auth/decorators/ctx-account.decorator";
+import moment from "moment";
 @Resolver()
 export class SongResolver {
   constructor(private readonly songService: SongService) {}
@@ -20,9 +21,11 @@ export class SongResolver {
 
   @Query(() => [SongType])
   async getAllSong(
-    @Args("keyword", { nullable: true, type: () => String }) keyword: string
+    @Args("keyword", { nullable: true, type: () => String }) keyword: string,
+    @Args("limit", { nullable: true, type: () => Number }) limit: number,
+    @Args("page", { nullable: true, type: () => Number }) page: number
   ): Promise<Array<SongType>> {
-    return this.songService.getAllSong(keyword);
+    return this.songService.getAllSong(keyword, page, limit);
   }
 
   @Query(() => SongType)
@@ -75,6 +78,12 @@ export class SongResolver {
     @Args("account_email") account_email: string
   ): Promise<Array<SongType>> {
     const listSong = await this.songService.getLikedSong(account_email);
+    return listSong;
+  }
+
+  @Query(() => [SongType])
+  async getTrendingSong(): Promise<Array<SongType>> {
+    const listSong = await this.songService.getSongByTrending();
     return listSong;
   }
 

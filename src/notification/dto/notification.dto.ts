@@ -26,4 +26,6 @@ export class NotificationType {
 export class CreateNotificationType {
   @Field(() => ID)
   readonly _id?: string;
+  @Field()
+  readonly user?: string;
 }

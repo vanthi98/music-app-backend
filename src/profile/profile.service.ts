@@ -7,6 +7,9 @@ import { Profile } from "./interfaces/profile.interface";
 import { ProfileType } from "./dto/create-profile.dto";
 import { ProfileInput } from "./inputs/input-profile.input";
 import * as mongoose from "mongoose";
+import { PubSub } from "graphql-subscriptions";
+
+const pubSub = new PubSub();
 
 @Injectable()
 export class ProfileService {
@@ -203,14 +206,12 @@ export class ProfileService {
       const account_id = user.id;
       const profile = await this.getProfileByAccountId(account_id);
       const { listFollowings } = profile;
-      console.log(listFollowings, follow_id);
       if (!listFollowings || listFollowings.length === 0) {
         throw new Error("Error occur when unfollow user");
       } else {
         if (listFollowings.indexOf(follow_id) > -1) {
           const temp = listFollowings;
           temp.splice(listFollowings.indexOf(follow_id), 1);
-          console.log(temp, profile.id);
           await this.update(
             {
               listFollowings: temp
@@ -249,6 +250,15 @@ export class ProfileService {
         },
         follow_id
       );
+      // await pubSub.publish("notificationAdded", {
+      //   input: {
+      //     title: "Bỏ Theo dõi",
+      //     description: `Người dùng ${profile.account_name} vừa bỏ theo dõi bạn`,
+      //     type: "unFollow",
+      //     status: "processing"
+      //   },
+      //   user_id: follow_id
+      // });
     }
     return follow_id;
   }

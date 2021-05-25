@@ -5,7 +5,7 @@ export interface Notification extends Document {
   readonly notice_id: string;
   readonly thumbnail: string;
   readonly title: string;
-  readonly createAt: Date;
+  readonly createdAt: Date;
   readonly type: string;
   readonly status: string;
   readonly description: string;

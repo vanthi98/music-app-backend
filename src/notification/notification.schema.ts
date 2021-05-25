@@ -5,7 +5,7 @@ export const NotificationSchema = new Schema({
   notice_id: String,
   thumbnail: String,
   title: String,
-  createAt: Date,
+  createdAt: Date,
   type: String,
   status: String,
   description: String,

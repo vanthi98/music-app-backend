@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { GraphQLModule } from "@nestjs/graphql";
@@ -15,19 +16,26 @@ import { PlaylistModule } from "./playlist/playlist.module";
 import { CategoryModule } from "./category/category.module";
 import { CountryModule } from "./country/country.module";
 import { NotificationModule } from "./notification/notification.module";
+import { PubSubModule } from "./pub-sub/pub-sub.module";
+import { RoomModule } from './room/room.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-      autoSchemaFile: "schema.gql",
-      cors: {
-        credentials: true,
-        origin: true
-      }
+    ConfigModule.forRoot(),
+    GraphQLModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        playground: configService.get("GRAPHQL_PLAYGROUND") === "true",
+        autoSchemaFile: "schema.gql",
+        cors: {
+          credentials: true,
+          origin: true
+        },
+        installSubscriptionHandlers: true
+      })
     }),
-    // MongooseModule.forRoot(
-    //   "mongodb+srv://vanthi1211:react19001560@cluster0.qe56j.mongodb.net/music?retryWrites=true&w=majority"
-    // ),
     MongooseModule.forRoot("mongodb://mongodb:27017/music"),
     MailerModule.forRoot({
       transport: {
@@ -59,7 +67,10 @@ import { NotificationModule } from "./notification/notification.module";
     PlaylistModule,
     CategoryModule,
     CountryModule,
-    NotificationModule
+    NotificationModule,
+    PubSubModule,
+    RoomModule,
+    MessageModule
   ],
   controllers: [AppController],
   providers: [AppService]

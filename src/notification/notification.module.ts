@@ -1,3 +1,4 @@
+import { PubSubModule } from "./../pub-sub/pub-sub.module";
 import { Module, forwardRef } from "@nestjs/common";
 import { NotificationService } from "./notification.service";
 import { NotificationResolver } from "./notification.resolver";
@@ -8,6 +9,7 @@ import { ProfileModule } from "../profile/profile.module";
 
 @Module({
   imports: [
+    PubSubModule,
     forwardRef(() => ProfileModule),
     MongooseModule.forFeature([
       { name: "Notification", schema: NotificationSchema }

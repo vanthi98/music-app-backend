@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from "@nestjs/graphql";
+import { ObjectType, Field, ID, Float } from "@nestjs/graphql";
 
 @ObjectType()
 export class SongType {
@@ -38,6 +38,8 @@ export class SongType {
   readonly updatedAt?: Date;
   @Field(() => String, { nullable: true })
   readonly category?: string;
+  @Field(() => Float, { nullable: true })
+  readonly score?: string;
 }
 
 @ObjectType()

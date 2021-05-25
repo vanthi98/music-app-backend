@@ -29,6 +29,7 @@ scalar DateTime
 
 type CreateNotificationType {
   _id: ID!
+  user: String!
 }
 
 type HistoryType {
@@ -89,6 +90,7 @@ type SongType {
   createdAt: DateTime
   updatedAt: DateTime
   category: String
+  score: Float
 }
 
 type UploadSongType {
@@ -149,6 +151,46 @@ type CountryType {
   listSong: [String!]
 }
 
+type MessageType {
+  _id: ID!
+  message_id: String!
+  content: String!
+  createdAt: DateTime!
+  user: String!
+  room_id: String!
+  users: [String!]!
+}
+
+type MessageOutputType {
+  _id: ID!
+  message_id: String!
+  content: String!
+  createdAt: DateTime!
+  user: UserType!
+  room_id: String!
+  users: [UserType!]!
+}
+
+type RoomType {
+  _id: ID!
+  room_id: String!
+  createdAt: DateTime
+  type: String!
+  status: String!
+  users: [String!]!
+  messages: [MessageType!]
+}
+
+type RoomOutputType {
+  _id: ID!
+  room_id: String!
+  createdAt: DateTime
+  type: String!
+  status: String!
+  users: [UserType!]!
+  messages: [MessageOutputType!]
+}
+
 type Query {
   getAllAccount: [AccountType!]!
   getAccount(id: String!): AccountType!
@@ -162,7 +204,7 @@ type Query {
   getListFollowings: [ProfileType!]!
   getAllTest: [TestType!]!
   getOneTest(title: String!): TestType!
-  getAllSong(keyword: String): [SongType!]!
+  getAllSong(page: Float, limit: Float, keyword: String): [SongType!]!
   getSong(song_id: String): SongType!
   getSongByCurrentAccount: [SongType!]!
   getSongByAccount(account_email: String!): [SongType!]!
@@ -170,11 +212,14 @@ type Query {
   getLikedSongByCurrentAccount: [SongType!]!
   getHistoryByCurrentAccount: [SongType!]!
   getLikedSongByEmail(account_email: String!): [SongType!]!
+  getTrendingSong: [SongType!]!
   getCommentBySong(song_id: String!): [CommentType!]!
   getAllPlaylist: [PlaylistType!]!
   getSongByPlaylist(playlist_id: String!): [SongType!]!
   getPlaylistById(playlist_id: String!): PlaylistType!
   getAllCountry: [CountryType!]!
+  getRoomDetail(room_id: String!): RoomOutputType!
+  getAllRoom: [RoomOutputType!]!
 }
 
 type Mutation {
@@ -184,6 +229,8 @@ type Mutation {
   resetAccountPassword(input: ResetPasswordInput!): AccountType!
   deleteResetPasswordToken(email: String!): String!
   createNotification(user_id: String!, input: NotificationInput!): CreateNotificationType!
+  markReadNotice(notice_id: String!): NotificationType!
+  hideNotice(notice_id: String!): NotificationType!
   updateProfile(input: ProfileInput!, id: String!): ProfileType!
   followUser(follow_id: String!): String!
   unFollowUser(follow_id: String!): String!
@@ -200,6 +247,8 @@ type Mutation {
   addSongToPlaylist(song_id: String!, playlist_id: String!): CreatePlaylistType!
   removeSongFromPlaylist(song_id: String!, playlist_id: String!): CreatePlaylistType!
   removePlaylist(playlist_id: String!): String!
+  createMessage(input: MessageInput!): MessageType!
+  createRoom(list_users: [String!], input: RoomInput!): RoomType!
 }
 
 input AccountInput {
@@ -271,4 +320,18 @@ input CreatePlaylistInput {
   name: String!
   notes: String
   listSong: [String!]
+}
+
+input MessageInput {
+  content: String
+  room_id: String
+}
+
+input RoomInput {
+  type: String!
+}
+
+type Subscription {
+  notificationAdded(profile_id: String!): CreateNotificationType!
+  messageSend(profile_id: String!): MessageType!
 }

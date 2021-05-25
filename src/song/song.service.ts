@@ -7,6 +7,9 @@ import { UploadSongType, SongType } from "./dto/song.dto";
 import { ProfileService } from "../profile/profile.service";
 import { AccountService } from "../account/account.service";
 import * as mongoose from "mongoose";
+import * as moment from "moment";
+
+const G = 1.2;
 
 @Injectable()
 export class SongService {
@@ -40,14 +43,24 @@ export class SongService {
     return await this.songModel.findById(songId);
   }
 
-  async getAllSong(keyword: string): Promise<Array<SongType>> {
+  async getAllSong(
+    keyword: string,
+    page: number = 1,
+    limit: number
+  ): Promise<Array<SongType>> {
     if (keyword) {
-      const listSong = await this.songModel.find({
-        song_name: { $regex: new RegExp(keyword, "i") }
-      });
+      const listSong = await this.songModel
+        .find({
+          song_name: { $regex: new RegExp(keyword, "i") }
+        })
+        .skip(0)
+        .limit(limit * page);
       return listSong;
     } else {
-      const listSong = await this.songModel.find({});
+      const listSong = await this.songModel
+        .find({})
+        .skip(0)
+        .limit(limit * page);
       return listSong;
     }
   }
@@ -383,5 +396,32 @@ export class SongService {
       listSong.push(song);
     }
     return listSong;
+  }
+
+  async getSongByTrending(): Promise<Array<SongType>> {
+    // Sử dụng thuật toán trending của youtube, reddit, ...
+    const songs = await this.songModel.find({});
+    const current = new Date();
+    const scoreSong = songs.map(song => {
+      const { like, listen, createdAt, listComment } = song;
+      const comment = listComment.length;
+      const n = listen + like * 5 + comment * 5;
+      const seconds = moment(current).unix() - moment(createdAt).unix();
+      const score = n / Math.pow(seconds / 3600, G);
+      song.score = score;
+      return song;
+    });
+    return scoreSong;
+  }
+
+  async getRelatedSongBySong(): Promise<Array<SongType>> {
+    // Tìm theo uploader => Sau đó tới country => Sau đó tới category
+    // Vd: bài A và B chung người upload, +4 đ, A và C chung country +3 đ, bài A và D chung category +2 đ
+    // bài A và E chung người upload và chung country + 4*3 = 12đ
+    // bài A và F chung người upload và chung category + 4*2 = 8đ
+    // => Danh sách bài hát relative của bài hát A là: E(12) => F(8) => B(4) => C(3) => D(2) => ..
+    // List trên lấy ra 5 bài có điểm cao nhất, trả về
+    // Nếu không đủ 5 bài thì random ngẫu nhiên trả về cho đủ 5 bài
+    return [];
   }
 }

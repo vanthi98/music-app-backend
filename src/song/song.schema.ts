@@ -19,6 +19,6 @@ export const SongSchema = new Schema({
   status: Boolean,
   listLikedUser: [{ type: Schema.Types.ObjectId, ref: "Profile" }],
   listComment: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-  country: { type: Schema.Types.ObjectId, ref: "Country" },
+  country: Number,
   category: { type: Schema.Types.ObjectId, ref: "Category" }
 });

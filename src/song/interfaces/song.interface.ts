@@ -16,6 +16,6 @@ export interface Song extends Document {
   readonly listComment?: Array<string>;
   readonly createdAt: Date;
   readonly updatedAt: Date;
-  readonly country: string;
+  readonly country: number;
   readonly category: string;
 }
