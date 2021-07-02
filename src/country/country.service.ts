@@ -15,4 +15,12 @@ export class CountryService {
       throw new Error(error);
     }
   }
+
+  async getCountryById(country_id: number): Promise<CountryType> {
+    try {
+      return await this.countryModel.findOne({ country_id });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }

@@ -28,6 +28,21 @@ export class SongResolver {
     return this.songService.getAllSong(keyword, page, limit);
   }
 
+  @Query(() => [SongType])
+  async getSongByAuthor(
+    @Args("author", { nullable: true, type: () => String }) author: string
+  ): Promise<Array<SongType>> {
+    return this.songService.getSongByAuthor(author);
+  }
+
+  @Query(() => [SongType])
+  async getSongByCountryId(
+    @Args("country_id", { nullable: true, type: () => Number })
+    country_id: number
+  ): Promise<Array<SongType>> {
+    return this.songService.getSongByCountryId(country_id);
+  }
+
   @Query(() => SongType)
   async getSong(
     @Args("song_id", { nullable: true, type: () => String }) song_id: string

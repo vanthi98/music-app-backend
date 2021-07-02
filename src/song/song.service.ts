@@ -49,13 +49,20 @@ export class SongService {
     limit: number
   ): Promise<Array<SongType>> {
     if (keyword) {
-      const listSong = await this.songModel
-        .find({
+      if (page && limit) {
+        const listSong = await this.songModel
+          .find({
+            song_name: { $regex: new RegExp(keyword, "i") }
+          })
+          .skip(0)
+          .limit(limit * page);
+        return listSong;
+      } else {
+        const listSong = await this.songModel.find({
           song_name: { $regex: new RegExp(keyword, "i") }
-        })
-        .skip(0)
-        .limit(limit * page);
-      return listSong;
+        });
+        return listSong;
+      }
     } else {
       const listSong = await this.songModel
         .find({})
@@ -63,6 +70,20 @@ export class SongService {
         .limit(limit * page);
       return listSong;
     }
+  }
+
+  async getSongByAuthor(author: string): Promise<Array<SongType>> {
+    const listSong = await this.songModel.find({
+      author: { $regex: new RegExp(author, "i") }
+    });
+    return await listSong;
+  }
+
+  async getSongByCountryId(country_id: number): Promise<Array<SongType>> {
+    const listSong = await this.songModel.find({
+      country: country_id
+    });
+    return await listSong;
   }
 
   async update(songDto: Song, songId: string): Promise<SongType> {

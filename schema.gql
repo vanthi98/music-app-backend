@@ -205,6 +205,8 @@ type Query {
   getAllTest: [TestType!]!
   getOneTest(title: String!): TestType!
   getAllSong(page: Float, limit: Float, keyword: String): [SongType!]!
+  getSongByAuthor(author: String): [SongType!]!
+  getSongByCountryId(country_id: Float): [SongType!]!
   getSong(song_id: String): SongType!
   getSongByCurrentAccount: [SongType!]!
   getSongByAccount(account_email: String!): [SongType!]!
@@ -218,6 +220,7 @@ type Query {
   getSongByPlaylist(playlist_id: String!): [SongType!]!
   getPlaylistById(playlist_id: String!): PlaylistType!
   getAllCountry: [CountryType!]!
+  getCountryByCountryId(country_id: Float): CountryType!
   getRoomDetail(room_id: String!): RoomOutputType!
   getAllRoom: [RoomOutputType!]!
 }
